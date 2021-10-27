@@ -273,63 +273,158 @@
     </el-row>
 
     <el-table v-loading="loading" :data="employeeInfoList" @selection-change="handleSelectionChange">
+
+
+      <el-table-column type="expand">
+        <template slot-scope="props">
+          <el-form label-position="left" inline class="demo-table-expand">
+            <el-form-item label="身份证号">
+              <span>{{ props.row.idcard }}</span>
+            </el-form-item>
+            <el-form-item label="婚姻状况">
+              <span>{{ props.row.wedlock }}</span>
+            </el-form-item>
+            <el-form-item label="民族">
+              <span>{{ props.row.nationid }}</span>
+            </el-form-item>
+            <el-form-item label="籍贯">
+              <span>{{ props.row.nativeplace }}</span>
+            </el-form-item>
+            <el-form-item label="政治面貌">
+              <span>{{ props.row.politicid }}</span>
+            </el-form-item>
+            <el-form-item label="邮箱">
+              <span>{{ props.row.email }}</span>
+            </el-form-item>
+            <el-form-item label="电话号码">
+              <span>{{ props.row.phone }}</span>
+            </el-form-item>
+            <el-form-item label="联系地址">
+              <span>{{ props.row.address }}</span>
+            </el-form-item>
+            <el-form-item label="所属部门">
+              <span>{{ props.row.departmentid }}</span>
+            </el-form-item>
+            <el-form-item label="职称ID">
+              <span>{{ props.row.joblevelid }}</span>
+            </el-form-item>
+            <el-form-item label="聘用形式">
+              <span>{{ props.row.engageform }}</span>
+            </el-form-item>
+            <el-form-item label="最高学历">
+              <span>{{ props.row.tiptopdegree }}</span>
+            </el-form-item>
+            <el-form-item label="所属专业">
+              <span>{{ props.row.specialty }}</span>
+            </el-form-item>
+            <el-form-item label="毕业院校">
+              <span>{{ props.row.tiptopdegree }}</span>
+            </el-form-item>
+            <el-form-item label="最高学历">
+              <span>{{ props.row.school }}</span>
+            </el-form-item>
+            <el-form-item label="入职日期">
+              <span>{{ props.row.begindate }}</span>
+            </el-form-item>
+            <el-form-item label="在职状态">
+              <span>{{ props.row.workstate }}</span>
+            </el-form-item>
+            <el-form-item label="工号">
+              <span>{{ props.row.workid }}</span>
+            </el-form-item>
+            <el-form-item label="合同期限">
+              <span>{{ props.row.contractterm }}</span>
+            </el-form-item>
+            <el-form-item label="转正日期">
+              <span>{{ props.row.conversiontime }}</span>
+            </el-form-item>
+            <el-form-item label="在职状态">
+              <span>{{ props.row.workstate }}</span>
+            </el-form-item>
+            <el-form-item label="工号">
+              <span>{{ props.row.workid }}</span>
+            </el-form-item>
+            <el-form-item label="合同期限">
+              <span>{{ props.row.contractterm }}</span>
+            </el-form-item>
+            <el-form-item label="转正日期">
+              <span>{{ props.row.conversiontime }}</span>
+            </el-form-item>
+            <el-form-item label="离职日期">
+              <span>{{ props.row.notworkdate }}</span>
+            </el-form-item>
+            <el-form-item label="合同起始日期">
+              <span>{{ props.row.begincontract }}</span>
+            </el-form-item>
+            <el-form-item label="合同终止日期">
+              <span>{{ props.row.endcontract }}</span>
+            </el-form-item>
+            <el-form-item label="工龄">
+              <span>{{ props.row.endcontract }}</span>
+            </el-form-item>
+          </el-form>
+        </template>
+      </el-table-column>
+
+
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="员工编号" align="center" prop="id" />
       <el-table-column label="员工姓名" align="center" prop="name" />
-      <el-table-column label="性别" align="center" prop="gender">
-        <template slot-scope="scope">
-          <dict-tag :options="dict.type.sys_user_sex" :value="scope.row.gender"/>
-        </template>
-      </el-table-column>
+      <el-table-column label="性别" align="center" prop="gender"/>
+<!--      <el-table-column label="性别" align="center" prop="gender">-->
+<!--        <template slot-scope="scope">-->
+<!--          <dict-tag :options="dict.type.sys_user_sex" :value="scope.row.gender"/>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
       <el-table-column label="出生日期" align="center" prop="birthday" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.birthday, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="身份证号" align="center" prop="idcard" />
+<!--      <el-table-column label="身份证号" align="center" prop="idcard" />-->
       <el-table-column label="婚姻状况" align="center" prop="wedlock" />
       <el-table-column label="民族" align="center" prop="nationid" />
       <el-table-column label="籍贯" align="center" prop="nativeplace" />
       <el-table-column label="政治面貌" align="center" prop="politicid" />
-      <el-table-column label="邮箱" align="center" prop="email" />
-      <el-table-column label="电话号码" align="center" prop="phone" />
-      <el-table-column label="联系地址" align="center" prop="address" />
-      <el-table-column label="所属部门" align="center" prop="departmentid" />
-      <el-table-column label="职称ID" align="center" prop="joblevelid" />
-      <el-table-column label="职位ID" align="center" prop="posid" />
-      <el-table-column label="聘用形式" align="center" prop="engageform" />
-      <el-table-column label="最高学历" align="center" prop="tiptopdegree" />
-      <el-table-column label="所属专业" align="center" prop="specialty" />
-      <el-table-column label="毕业院校" align="center" prop="school" />
-      <el-table-column label="入职日期" align="center" prop="begindate" width="180">
-        <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.begindate, '{y}-{m}-{d}') }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="在职状态" align="center" prop="workstate" />
-      <el-table-column label="工号" align="center" prop="workid" />
-      <el-table-column label="合同期限" align="center" prop="contractterm" />
-      <el-table-column label="转正日期" align="center" prop="conversiontime" width="180">
-        <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.conversiontime, '{y}-{m}-{d}') }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="离职日期" align="center" prop="notworkdate" width="180">
-        <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.notworkdate, '{y}-{m}-{d}') }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="合同起始日期" align="center" prop="begincontract" width="180">
-        <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.begincontract, '{y}-{m}-{d}') }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="合同终止日期" align="center" prop="endcontract" width="180">
-        <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.endcontract, '{y}-{m}-{d}') }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="工龄" align="center" prop="workage" />
+<!--      <el-table-column label="邮箱" align="center" prop="email" />-->
+<!--      <el-table-column label="电话号码" align="center" prop="phone" />-->
+<!--      <el-table-column label="联系地址" align="center" prop="address" />-->
+<!--      <el-table-column label="所属部门" align="center" prop="departmentid" />-->
+<!--      <el-table-column label="职称ID" align="center" prop="joblevelid" />-->
+<!--      <el-table-column label="职位ID" align="center" prop="posid" />-->
+<!--      <el-table-column label="聘用形式" align="center" prop="engageform" />-->
+<!--      <el-table-column label="最高学历" align="center" prop="tiptopdegree" />-->
+<!--      <el-table-column label="所属专业" align="center" prop="specialty" />-->
+<!--      <el-table-column label="毕业院校" align="center" prop="school" />-->
+<!--      <el-table-column label="入职日期" align="center" prop="begindate" width="180">-->
+<!--        <template slot-scope="scope">-->
+<!--          <span>{{ parseTime(scope.row.begindate, '{y}-{m}-{d}') }}</span>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
+<!--      <el-table-column label="在职状态" align="center" prop="workstate" />-->
+<!--      <el-table-column label="工号" align="center" prop="workid" />-->
+<!--      <el-table-column label="合同期限" align="center" prop="contractterm" />-->
+<!--      <el-table-column label="转正日期" align="center" prop="conversiontime" width="180">-->
+<!--        <template slot-scope="scope">-->
+<!--          <span>{{ parseTime(scope.row.conversiontime, '{y}-{m}-{d}') }}</span>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
+<!--      <el-table-column label="离职日期" align="center" prop="notworkdate" width="180">-->
+<!--        <template slot-scope="scope">-->
+<!--          <span>{{ parseTime(scope.row.notworkdate, '{y}-{m}-{d}') }}</span>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
+<!--      <el-table-column label="合同起始日期" align="center" prop="begincontract" width="180">-->
+<!--        <template slot-scope="scope">-->
+<!--          <span>{{ parseTime(scope.row.begincontract, '{y}-{m}-{d}') }}</span>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
+<!--      <el-table-column label="合同终止日期" align="center" prop="endcontract" width="180">-->
+<!--        <template slot-scope="scope">-->
+<!--          <span>{{ parseTime(scope.row.endcontract, '{y}-{m}-{d}') }}</span>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
+<!--      <el-table-column label="工龄" align="center" prop="workage" />-->
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -349,7 +444,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -359,7 +454,7 @@
     />
 
     <!-- 添加或修改员工信息管理对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog :title="title" :visible.sync="open" width="80%" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="员工姓名" prop="name">
           <el-input v-model="form.name" placeholder="请输入员工姓名" />
@@ -792,3 +887,18 @@ export default {
   }
 };
 </script>
+
+<style>
+  .demo-table-expand {
+    font-size: 0;
+  }
+  .demo-table-expand label {
+    width: 90px;
+    color: #99a9bf;
+  }
+  .demo-table-expand .el-form-item {
+    margin-right: 0;
+    margin-bottom: 0;
+    width: 50%;
+  }
+</style>
