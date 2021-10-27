@@ -124,48 +124,98 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['employee:approvalProcess:add']"
-        >新增</el-button>
+        >提交申请</el-button>
       </el-col>
+
       <el-col :span="1.5">
         <el-button
           type="success"
           plain
           icon="el-icon-edit"
           size="mini"
-          :disabled="single"
-          @click="handleUpdate"
-          v-hasPermi="['employee:approvalProcess:edit']"
-        >修改</el-button>
+          @click="viewApprovalProcess"
+        >查看审批流程</el-button>
       </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="danger"
-          plain
-          icon="el-icon-delete"
-          size="mini"
-          :disabled="multiple"
-          @click="handleDelete"
-          v-hasPermi="['employee:approvalProcess:remove']"
-        >删除</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="warning"
-          plain
-          icon="el-icon-download"
-          size="mini"
-          :loading="exportLoading"
-          @click="handleExport"
-          v-hasPermi="['employee:approvalProcess:export']"
-        >导出</el-button>
-      </el-col>
+
+<!--      <el-col :span="1.5">-->
+<!--        <el-button-->
+<!--          type="success"-->
+<!--          plain-->
+<!--          icon="el-icon-edit"-->
+<!--          size="mini"-->
+<!--          :disabled="single"-->
+<!--          @click="handleUpdate"-->
+<!--          v-hasPermi="['employee:approvalProcess:edit']"-->
+<!--        >修改</el-button>-->
+<!--      </el-col>-->
+<!--      <el-col :span="1.5">-->
+<!--        <el-button-->
+<!--          type="danger"-->
+<!--          plain-->
+<!--          icon="el-icon-delete"-->
+<!--          size="mini"-->
+<!--          :disabled="multiple"-->
+<!--          @click="handleDelete"-->
+<!--          v-hasPermi="['employee:approvalProcess:remove']"-->
+<!--        >删除</el-button>-->
+<!--      </el-col>-->
+<!--      <el-col :span="1.5">-->
+<!--        <el-button-->
+<!--          type="warning"-->
+<!--          plain-->
+<!--          icon="el-icon-download"-->
+<!--          size="mini"-->
+<!--          :loading="exportLoading"-->
+<!--          @click="handleExport"-->
+<!--          v-hasPermi="['employee:approvalProcess:export']"-->
+<!--        >导出</el-button>-->
+<!--      </el-col>-->
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <!--表格-->
     <el-table v-loading="loading" :data="approvalProcessList" @selection-change="handleSelectionChange">
+
+      <el-table-column type="expand">
+        <template slot-scope="props">
+          <el-timeline>
+            <el-timeline-item v-if="props.row.ceoApprovalState != null || props.row.deptApprovalState != null" :timestamp="parseTime(props.row.passTime)" placement="top">
+              <el-card>
+                <h4>审批结果</h4>
+                <p>{{ (props.row.ceoApprovalState == 1 && props.row.deptApprovalState == 1)? "审批通过" : "审批未通过"}}</p>
+              </el-card>
+            </el-timeline-item>
+            <el-timeline-item v-if="props.row.ceoApprovalState != null" :timestamp="parseTime(props.row.ceoApprovalTime)" placement="top">
+              <el-card>
+                <h4>总经理审批</h4>
+                <p>{{props.row.ceoName}} {{ props.row.ceoApprovalState == 1 ? "同意" : "拒绝："+ props.row.reasonFailure}}</p>
+              </el-card>
+            </el-timeline-item>
+            <el-timeline-item v-if="props.row.deptApprovalState != null" :timestamp="parseTime(props.row.deptApprovalTime)" placement="top">
+              <el-card>
+                <h4>部门经理审批</h4>
+                <p>{{props.row.deptManagerName}} {{ props.row.deptApprovalState == 1 ? "同意" : "拒绝："+ props.row.reasonFailure }}</p>
+              </el-card>
+            </el-timeline-item>
+
+            <el-timeline-item :timestamp="parseTime(props.row.creatTime)" placement="top">
+              <el-card>
+                <h4>提交 <span v-for="approvalTypeIdOption in approvalTypeIdOptions">
+                          <span v-if="approvalTypeIdOption.value == props.row.approvalTypeId"> {{ approvalTypeIdOption.label }}</span>
+                        </span>
+                  申请
+                </h4>
+                <p>{{props.row.employeeName}} {{props.row.approvalRemark}}</p>
+              </el-card>
+            </el-timeline-item>
+          </el-timeline>
+        </template>
+      </el-table-column>
+
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="主键" align="center" prop="id" />
+      <el-table-column label="申请人" align="center" prop="employeeName" />
+      <el-table-column label="部门" align="center" prop="deptName" />
       <el-table-column label="审批类型" align="center" prop="approvalTypeId" >
         <template slot-scope="props">
           <span v-for="approvalTypeIdOption in approvalTypeIdOptions">
@@ -174,43 +224,45 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="部门审批状态" align="center" prop="deptApprovalState">
-        <template slot-scope="props">
-          <el-tag v-if="props.row.deptApprovalState == 1" type="success">通过</el-tag>
-          <el-tag v-if="props.row.deptApprovalState == 0" type="danger">未通过</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column label="部门审批时间" align="center" prop="deptApprovalTime" width="180">
-        <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.deptApprovalTime) }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="总经理审批状态" align="center" prop="ceoApprovalState">
-        <template slot-scope="props">
-          <el-tag v-if="props.row.ceoApprovalState == 1" type="success">通过</el-tag>
-          <el-tag v-if="props.row.ceoApprovalState == 0" type="danger">未通过</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column label="总经理审批时间" align="center" prop="ceoApprovalTime" width="180">
-        <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.ceoApprovalTime) }}</span>
-        </template>
-      </el-table-column>
+
+<!--      <el-table-column label="部门审批状态" align="center" prop="deptApprovalState">-->
+<!--        <template slot-scope="props">-->
+<!--          <el-tag v-if="props.row.deptApprovalState == 1" type="success">通过</el-tag>-->
+<!--          <el-tag v-else-if type="danger">未通过</el-tag>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
+<!--      <el-table-column label="部门审批时间" align="center" prop="deptApprovalTime" width="180">-->
+<!--        <template slot-scope="scope">-->
+<!--          <span>{{ parseTime(scope.row.deptApprovalTime) }}</span>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
+<!--      <el-table-column label="总经理审批状态" align="center" prop="ceoApprovalState">-->
+<!--        <template slot-scope="props">-->
+<!--          <el-tag v-if="props.row.ceoApprovalState == 1" type="success">通过</el-tag>-->
+<!--          <el-tag v-else-if="" type="danger">未通过</el-tag>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
+<!--      <el-table-column label="总经理审批时间" align="center" prop="ceoApprovalTime" width="180">-->
+<!--        <template slot-scope="scope">-->
+<!--          <span>{{ parseTime(scope.row.ceoApprovalTime) }}</span>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
       <el-table-column label="部门经理" align="center" prop="deptManagerName" />
       <el-table-column label="总经理" align="center" prop="ceoName" />
-      <el-table-column label="审批备注" align="center" prop="approvalRemark" />
+<!--      <el-table-column label="审批备注" align="center" prop="approvalRemark" />-->
       <el-table-column label="审批状态" align="center" prop="aprrovalState">
         <template slot-scope="props">
           <el-tag v-if="props.row.aprrovalState == 1" type="success">通过</el-tag>
           <el-tag v-if="props.row.aprrovalState == 0" type="danger">未通过</el-tag>
+          <el-tag v-if="props.row.aprrovalState == 3">进行中</el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="未通过原因" align="center" prop="reasonFailure" />
-      <el-table-column label="通过时间" align="center" prop="passTime" width="180">
-        <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.passTime) }}</span>
-        </template>
-      </el-table-column>
+<!--      <el-table-column label="未通过原因" align="center" prop="reasonFailure" />-->
+<!--      <el-table-column label="通过时间" align="center" prop="passTime" width="180">-->
+<!--        <template slot-scope="scope">-->
+<!--          <span>{{ parseTime(scope.row.passTime) }}</span>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
       <el-table-column label="创建时间" align="center" prop="creatTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.creatTime) }}</span>
@@ -247,66 +299,84 @@
     <!-- 添加或修改审批管理对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="审批类型id" prop="approvalTypeId">
-          <el-input v-model="form.approvalTypeId" placeholder="请输入审批类型id" />
+<!--        <el-form-item label="审批类型id" prop="approvalTypeId">-->
+<!--          <el-input v-model="form.approvalTypeId" placeholder="请输入审批类型id" />-->
+<!--        </el-form-item>-->
+        <el-form-item label="审批类型" prop="approvalTypeId">
+          <el-select v-model="form.approvalTypeId"
+                     placeholder="请选择审批类型"
+                     size="small">
+            <el-option v-for="(item, index) in approvalTypeIdOptions" :key="index" :label="item.label"
+                       :value="item.value" :disabled="item.disabled"></el-option>
+          </el-select>
         </el-form-item>
-        <el-form-item label="部门审批状态" prop="deptApprovalState">
-          <el-input v-model="form.deptApprovalState" placeholder="请输入部门审批状态" />
-        </el-form-item>
-        <el-form-item label="部门审批时间" prop="deptApprovalTime">
-          <el-date-picker clearable size="small"
-            v-model="form.deptApprovalTime"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="选择部门审批时间">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="总经理审批状态" prop="ceoApprovalState">
-          <el-input v-model="form.ceoApprovalState" placeholder="请输入总经理审批状态" />
-        </el-form-item>
-        <el-form-item label="总经理审批时间" prop="ceoApprovalTime">
-          <el-date-picker clearable size="small"
-            v-model="form.ceoApprovalTime"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="选择总经理审批时间">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="部门经理(员工信息id)" prop="deptManager">
-          <el-input v-model="form.deptManager" placeholder="请输入部门经理(员工信息id)" />
-        </el-form-item>
-        <el-form-item label="总经理(员工信息id)" prop="ceo">
-          <el-input v-model="form.ceo" placeholder="请输入总经理(员工信息id)" />
-        </el-form-item>
+<!--        <el-form-item label="部门审批状态" prop="deptApprovalState">-->
+<!--          <el-input v-model="form.deptApprovalState" placeholder="请输入部门审批状态" />-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="部门审批时间" prop="deptApprovalTime">-->
+<!--          <el-date-picker clearable size="small"-->
+<!--            v-model="form.deptApprovalTime"-->
+<!--            type="date"-->
+<!--            value-format="yyyy-MM-dd"-->
+<!--            placeholder="选择部门审批时间">-->
+<!--          </el-date-picker>-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="总经理审批状态" prop="ceoApprovalState">-->
+<!--          <el-input v-model="form.ceoApprovalState" placeholder="请输入总经理审批状态" />-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="总经理审批时间" prop="ceoApprovalTime">-->
+<!--          <el-date-picker clearable size="small"-->
+<!--            v-model="form.ceoApprovalTime"-->
+<!--            type="date"-->
+<!--            value-format="yyyy-MM-dd"-->
+<!--            placeholder="选择总经理审批时间">-->
+<!--          </el-date-picker>-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="部门经理(员工信息id)" prop="deptManager">-->
+<!--          <el-input v-model="form.deptManager" placeholder="请输入部门经理(员工信息id)" />-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="总经理(员工信息id)" prop="ceo">-->
+<!--          <el-input v-model="form.ceo" placeholder="请输入总经理(员工信息id)" />-->
+<!--        </el-form-item>-->
         <el-form-item label="审批备注" prop="approvalRemark">
           <el-input v-model="form.approvalRemark" type="textarea" placeholder="请输入内容" />
         </el-form-item>
-        <el-form-item label="审批状态" prop="aprrovalState">
-          <el-input v-model="form.aprrovalState" placeholder="请输入审批状态" />
-        </el-form-item>
-        <el-form-item label="未通过原因" prop="reasonFailure">
-          <el-input v-model="form.reasonFailure" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="通过时间" prop="passTime">
-          <el-date-picker clearable size="small"
-            v-model="form.passTime"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="选择通过时间">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="创建时间" prop="creatTime">
-          <el-date-picker clearable size="small"
-            v-model="form.creatTime"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="选择创建时间">
-          </el-date-picker>
-        </el-form-item>
+<!--        <el-form-item label="审批状态" prop="aprrovalState">-->
+<!--          <el-input v-model="form.aprrovalState" placeholder="请输入审批状态" />-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="未通过原因" prop="reasonFailure">-->
+<!--          <el-input v-model="form.reasonFailure" type="textarea" placeholder="请输入内容" />-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="通过时间" prop="passTime">-->
+<!--          <el-date-picker clearable size="small"-->
+<!--            v-model="form.passTime"-->
+<!--            type="date"-->
+<!--            value-format="yyyy-MM-dd"-->
+<!--            placeholder="选择通过时间">-->
+<!--          </el-date-picker>-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="创建时间" prop="creatTime">-->
+<!--          <el-date-picker clearable size="small"-->
+<!--            v-model="form.creatTime"-->
+<!--            type="date"-->
+<!--            value-format="yyyy-MM-dd"-->
+<!--            placeholder="选择创建时间">-->
+<!--          </el-date-picker>-->
+<!--        </el-form-item>-->
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
+      </div>
+    </el-dialog>
+
+    <!--审批流程弹出框-->
+    <el-dialog title="审批流程示意图" :visible.sync="viewApprovalProcessOpen" append-to-body>
+      <div class="block" align="center">
+        <el-image
+          style="width: 350px; height: 500px;"
+          src="http://zhouhongyin.top/upload/2021/10/%E5%AE%A1%E6%89%B9%E6%B5%81%E7%A8%8B-d829cc147d9a4ed4ad1ea1ee8c80a8ce.png"
+          fit="fill"></el-image>
       </div>
     </el-dialog>
   </div>
@@ -346,6 +416,7 @@ export default {
       title: "",
       // 是否显示弹出层
       open: false,
+      viewApprovalProcessOpen: false,
       // 创建时间时间范围
       daterangeDeptApprovalTime: [],
       // 创建时间时间范围
@@ -502,6 +573,12 @@ export default {
       this.open = true;
       this.title = "添加审批管理";
     },
+
+    viewApprovalProcess() {
+
+      this.viewApprovalProcessOpen = true;
+    },
+
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
