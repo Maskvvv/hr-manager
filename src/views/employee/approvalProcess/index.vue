@@ -1,92 +1,88 @@
 <template>
   <div class="app-container">
+    <!--查询条件-->
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="主键" prop="id">
-        <el-input
-          v-model="queryParams.id"
-          placeholder="请输入主键"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
+
+      <el-form-item label="审批类型" prop="approvalTypeId">
+        <el-select v-model="queryParams.approvalTypeId"
+                   placeholder="请选择审批类型"
+                   clearable
+                   size="small"
+                   @keyup.enter.native="handleQuery">
+          <el-option v-for="(item, index) in approvalTypeIdOptions" :key="index" :label="item.label"
+                     :value="item.value" :disabled="item.disabled"></el-option>
+        </el-select>
       </el-form-item>
-      <el-form-item label="审批类型id" prop="approvalTypeId">
-        <el-input
-          v-model="queryParams.approvalTypeId"
-          placeholder="请输入审批类型id"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="部门审批状态" prop="deptApprovalState">
-        <el-input
-          v-model="queryParams.deptApprovalState"
-          placeholder="请输入部门审批状态"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="部门审批时间">
-        <el-date-picker
-          v-model="daterangeDeptApprovalTime"
-          size="small"
-          style="width: 240px"
-          value-format="yyyy-MM-dd"
-          type="daterange"
-          range-separator="-"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
-        ></el-date-picker>
-      </el-form-item>
-      <el-form-item label="总经理审批状态" prop="ceoApprovalState">
-        <el-input
-          v-model="queryParams.ceoApprovalState"
-          placeholder="请输入总经理审批状态"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="总经理审批时间">
-        <el-date-picker
-          v-model="daterangeCeoApprovalTime"
-          size="small"
-          style="width: 240px"
-          value-format="yyyy-MM-dd"
-          type="daterange"
-          range-separator="-"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
-        ></el-date-picker>
-      </el-form-item>
-      <el-form-item label="部门经理(员工信息id)" prop="deptManager">
-        <el-input
-          v-model="queryParams.deptManager"
-          placeholder="请输入部门经理(员工信息id)"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="总经理(员工信息id)" prop="ceo">
-        <el-input
-          v-model="queryParams.ceo"
-          placeholder="请输入总经理(员工信息id)"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
+
+<!--      <el-form-item label="部门审批状态" prop="deptApprovalState">-->
+<!--        <el-input-->
+<!--          v-model="queryParams.deptApprovalState"-->
+<!--          placeholder="请输入部门审批状态"-->
+<!--          clearable-->
+<!--          size="small"-->
+<!--          @keyup.enter.native="handleQuery"-->
+<!--        />-->
+<!--      </el-form-item>-->
+<!--      <el-form-item label="部门审批时间">-->
+<!--        <el-date-picker-->
+<!--          v-model="daterangeDeptApprovalTime"-->
+<!--          size="small"-->
+<!--          style="width: 240px"-->
+<!--          value-format="yyyy-MM-dd"-->
+<!--          type="daterange"-->
+<!--          range-separator="-"-->
+<!--          start-placeholder="开始日期"-->
+<!--          end-placeholder="结束日期"-->
+<!--        ></el-date-picker>-->
+<!--      </el-form-item>-->
+<!--      <el-form-item label="总经理审批状态" prop="ceoApprovalState">-->
+<!--        <el-input-->
+<!--          v-model="queryParams.ceoApprovalState"-->
+<!--          placeholder="请输入总经理审批状态"-->
+<!--          clearable-->
+<!--          size="small"-->
+<!--          @keyup.enter.native="handleQuery"-->
+<!--        />-->
+<!--      </el-form-item>-->
+<!--      <el-form-item label="总经理审批时间">-->
+<!--        <el-date-picker-->
+<!--          v-model="daterangeCeoApprovalTime"-->
+<!--          size="small"-->
+<!--          style="width: 240px"-->
+<!--          value-format="yyyy-MM-dd"-->
+<!--          type="daterange"-->
+<!--          range-separator="-"-->
+<!--          start-placeholder="开始日期"-->
+<!--          end-placeholder="结束日期"-->
+<!--        ></el-date-picker>-->
+<!--      </el-form-item>-->
+<!--      <el-form-item label="部门经理(员工信息id)" prop="deptManager">-->
+<!--        <el-input-->
+<!--          v-model="queryParams.deptManager"-->
+<!--          placeholder="请输入部门经理(员工信息id)"-->
+<!--          clearable-->
+<!--          size="small"-->
+<!--          @keyup.enter.native="handleQuery"-->
+<!--        />-->
+<!--      </el-form-item>-->
+<!--      <el-form-item label="总经理(员工信息id)" prop="ceo">-->
+<!--        <el-input-->
+<!--          v-model="queryParams.ceo"-->
+<!--          placeholder="请输入总经理(员工信息id)"-->
+<!--          clearable-->
+<!--          size="small"-->
+<!--          @keyup.enter.native="handleQuery"-->
+<!--        />-->
+<!--      </el-form-item>-->
       <el-form-item label="审批状态" prop="aprrovalState">
-        <el-input
-          v-model="queryParams.aprrovalState"
-          placeholder="请输入审批状态"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
+        <el-select v-model="queryParams.aprrovalState"
+                   placeholder="请选择审批状态"
+                   clearable
+                   size="small"
+                   @keyup.enter.native="handleQuery">
+          <el-option v-for="(item, index) in aprrovalStateOptions" :key="index" :label="item.label"
+                     :value="item.value" :disabled="item.disabled"></el-option>
+        </el-select>
       </el-form-item>
       <el-form-item label="通过时间">
         <el-date-picker
@@ -100,24 +96,25 @@
           end-placeholder="结束日期"
         ></el-date-picker>
       </el-form-item>
-      <el-form-item label="创建时间">
-        <el-date-picker
-          v-model="daterangeCreatTime"
-          size="small"
-          style="width: 240px"
-          value-format="yyyy-MM-dd"
-          type="daterange"
-          range-separator="-"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
-        ></el-date-picker>
-      </el-form-item>
+<!--      <el-form-item label="创建时间">-->
+<!--        <el-date-picker-->
+<!--          v-model="daterangeCreatTime"-->
+<!--          size="small"-->
+<!--          style="width: 240px"-->
+<!--          value-format="yyyy-MM-dd"-->
+<!--          type="daterange"-->
+<!--          range-separator="-"-->
+<!--          start-placeholder="开始日期"-->
+<!--          end-placeholder="结束日期"-->
+<!--        ></el-date-picker>-->
+<!--      </el-form-item>-->
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
 
+    <!--工具栏-->
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button
@@ -165,35 +162,58 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
+    <!--表格-->
     <el-table v-loading="loading" :data="approvalProcessList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="主键" align="center" prop="id" />
-      <el-table-column label="审批类型id" align="center" prop="approvalTypeId" />
-      <el-table-column label="部门审批状态" align="center" prop="deptApprovalState" />
+      <el-table-column label="审批类型" align="center" prop="approvalTypeId" >
+        <template slot-scope="props">
+          <span v-for="approvalTypeIdOption in approvalTypeIdOptions">
+            <span v-if="approvalTypeIdOption.value == props.row.approvalTypeId"> {{ approvalTypeIdOption.label }}</span>
+          </span>
+        </template>
+      </el-table-column>
+
+      <el-table-column label="部门审批状态" align="center" prop="deptApprovalState">
+        <template slot-scope="props">
+          <el-tag v-if="props.row.deptApprovalState == 1" type="success">通过</el-tag>
+          <el-tag v-if="props.row.deptApprovalState == 0" type="danger">未通过</el-tag>
+        </template>
+      </el-table-column>
       <el-table-column label="部门审批时间" align="center" prop="deptApprovalTime" width="180">
         <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.deptApprovalTime, '{y}-{m}-{d}') }}</span>
+          <span>{{ parseTime(scope.row.deptApprovalTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="总经理审批状态" align="center" prop="ceoApprovalState" />
+      <el-table-column label="总经理审批状态" align="center" prop="ceoApprovalState">
+        <template slot-scope="props">
+          <el-tag v-if="props.row.ceoApprovalState == 1" type="success">通过</el-tag>
+          <el-tag v-if="props.row.ceoApprovalState == 0" type="danger">未通过</el-tag>
+        </template>
+      </el-table-column>
       <el-table-column label="总经理审批时间" align="center" prop="ceoApprovalTime" width="180">
         <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.ceoApprovalTime, '{y}-{m}-{d}') }}</span>
+          <span>{{ parseTime(scope.row.ceoApprovalTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="部门经理(员工信息id)" align="center" prop="deptManager" />
-      <el-table-column label="总经理(员工信息id)" align="center" prop="ceo" />
+      <el-table-column label="部门经理" align="center" prop="deptManagerName" />
+      <el-table-column label="总经理" align="center" prop="ceoName" />
       <el-table-column label="审批备注" align="center" prop="approvalRemark" />
-      <el-table-column label="审批状态" align="center" prop="aprrovalState" />
+      <el-table-column label="审批状态" align="center" prop="aprrovalState">
+        <template slot-scope="props">
+          <el-tag v-if="props.row.aprrovalState == 1" type="success">通过</el-tag>
+          <el-tag v-if="props.row.aprrovalState == 0" type="danger">未通过</el-tag>
+        </template>
+      </el-table-column>
       <el-table-column label="未通过原因" align="center" prop="reasonFailure" />
       <el-table-column label="通过时间" align="center" prop="passTime" width="180">
         <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.passTime, '{y}-{m}-{d}') }}</span>
+          <span>{{ parseTime(scope.row.passTime) }}</span>
         </template>
       </el-table-column>
       <el-table-column label="创建时间" align="center" prop="creatTime" width="180">
         <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.creatTime, '{y}-{m}-{d}') }}</span>
+          <span>{{ parseTime(scope.row.creatTime) }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
@@ -215,7 +235,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -299,6 +319,13 @@ export default {
   name: "ApprovalProcess",
   data() {
     return {
+      aprrovalStateOptions: [{
+        "label": "通过",
+        "value": 1
+      }, {
+        "label": "未通过",
+        "value": 0
+      }],
       // 遮罩层
       loading: true,
       // 导出遮罩层
@@ -347,10 +374,17 @@ export default {
       },
       // 表单参数
       form: {},
+      approvalTypeIdOptions: [{
+        "label": "经费报销",
+        "value": 1
+      }, {
+        "label": "部门调动",
+        "value": 2
+      }],
       // 表单校验
       rules: {
         approvalTypeId: [
-          { required: true, message: "审批类型id不能为空", trigger: "blur" }
+          { required: true, message: "审批类型不能为空", trigger: "blur" }
         ],
         deptApprovalState: [
           { required: true, message: "部门审批状态不能为空", trigger: "blur" }
