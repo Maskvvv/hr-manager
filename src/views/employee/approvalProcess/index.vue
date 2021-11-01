@@ -228,7 +228,7 @@
       </el-table-column>
 
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="主键" align="center" prop="id" />
+<!--      <el-table-column label="主键" align="center" prop="id" />-->
       <el-table-column label="申请人" align="center" prop="approvalName" />
       <el-table-column label="部门" align="center" prop="deptName" />
       <el-table-column label="审批类型" align="center" prop="approvalTypeId" >
@@ -288,17 +288,30 @@
           <el-button
             size="mini"
             type="text"
-            icon="el-icon-edit"
+            icon="el-icon-check"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['employee:approvalProcess:edit']"
-          >修改</el-button>
+          >同意</el-button>
           <el-button
             size="mini"
             type="text"
-            icon="el-icon-delete"
-            @click="handleDelete(scope.row)"
-            v-hasPermi="['employee:approvalProcess:remove']"
-          >删除</el-button>
+            icon="el-icon-close"
+            @click="open = true"
+            v-hasPermi="['employee:approvalProcess:edit']"
+          >拒绝</el-button>
+          <el-dropdown size="mini" @command="(command) => handleCommand(command, scope.row)" v-hasPermi="['monitor:job:changeStatus', 'monitor:job:query']">
+            <span class="el-dropdown-link">
+              <i class="el-icon-d-arrow-right el-icon--right"></i>更多
+            </span>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item command="handleUpdate" icon="el-icon-edit"
+                                v-hasPermi="['employee:approvalProcess:edit']">修改</el-dropdown-item>
+              <el-dropdown-item command="handleDelete" icon="el-icon-delete"
+                                v-hasPermi="['employee:approvalProcess:remove']">删除</el-dropdown-item>
+              <el-dropdown-item command="handleJobLog" icon="el-icon-s-operation"
+                                v-hasPermi="['monitor:job:query']">调度日志</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
         </template>
       </el-table-column>
     </el-table>
@@ -545,6 +558,22 @@ export default {
     cancel() {
       this.open = false;
       this.reset();
+    },
+    // 更多操作触发
+    handleCommand(command, row) {
+      switch (command) {
+        case "handleDelete":
+          this.handleDelete(row);
+          break;
+        case "handleUpdate":
+          this.handleUpdate(row);
+          break;
+        case "handleJobLog":
+          this.handleJobLog(row);
+          break;
+        default:
+          break;
+      }
     },
     // 表单重置
     reset() {
