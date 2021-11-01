@@ -179,19 +179,34 @@
       <el-table-column type="expand">
         <template slot-scope="props">
           <el-timeline>
-            <el-timeline-item v-if="props.row.ceoApprovalState != null || props.row.deptApprovalState != null" :timestamp="parseTime(props.row.passTime)" placement="top">
+            <el-timeline-item v-if="props.row.aprrovalState != 2"
+                              :timestamp="parseTime(props.row.passTime)"
+                              :color="props.row.aprrovalState == 1 ? '#67C23A' : '#F56C6C'"
+                              size="large"
+                              :icon="props.row.aprrovalState == 1 ? 'el-icon-check' :'el-icon-close'"
+                              placement="top">
               <el-card>
                 <h4>审批结果</h4>
-                <p>{{ (props.row.ceoApprovalState == 1 && props.row.deptApprovalState == 1)? "审批通过" : "审批未通过"}}</p>
+                <p>{{ props.row.approvalState == 1? "审批通过" : "审批未通过"}}</p>
               </el-card>
             </el-timeline-item>
-            <el-timeline-item v-if="props.row.ceoApprovalState != null" :timestamp="parseTime(props.row.ceoApprovalTime)" placement="top">
+            <el-timeline-item v-if="props.row.ceoApprovalState != 2"
+                              :timestamp="parseTime(props.row.ceoApprovalTime)"
+                              :color="props.row.ceoApprovalState == 1 ? '#67C23A' : '#F56C6C'"
+                              size="large"
+                              :icon="props.row.ceoApprovalState == 1 ? 'el-icon-success' :'el-icon-warning-outline'"
+                              placement="top">
               <el-card>
                 <h4>总经理审批</h4>
                 <p>{{props.row.ceoName}} {{ props.row.ceoApprovalState == 1 ? "同意" : "拒绝："+ props.row.reasonFailure}}</p>
               </el-card>
             </el-timeline-item>
-            <el-timeline-item v-if="props.row.deptApprovalState != null" :timestamp="parseTime(props.row.deptApprovalTime)" placement="top">
+            <el-timeline-item v-if="props.row.deptApprovalState != 2"
+                              :timestamp="parseTime(props.row.deptApprovalTime)"
+                              :color="props.row.deptApprovalState == 1 ? '#67C23A' : '#F56C6C'"
+                              size="large"
+                              :icon="props.row.deptApprovalState == 1 ? 'el-icon-success' :'el-icon-warning-outline'"
+                              placement="top">
               <el-card>
                 <h4>部门经理审批</h4>
                 <p>{{props.row.deptManagerName}} {{ props.row.deptApprovalState == 1 ? "同意" : "拒绝："+ props.row.reasonFailure }}</p>
@@ -205,7 +220,7 @@
                         </span>
                   申请
                 </h4>
-                <p>{{props.row.employeeName}} {{props.row.approvalRemark}}</p>
+                <p>{{props.row.approvalName}} {{props.row.approvalRemark}}</p>
               </el-card>
             </el-timeline-item>
           </el-timeline>
@@ -214,7 +229,7 @@
 
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="主键" align="center" prop="id" />
-      <el-table-column label="申请人" align="center" prop="employeeName" />
+      <el-table-column label="申请人" align="center" prop="approvalName" />
       <el-table-column label="部门" align="center" prop="deptName" />
       <el-table-column label="审批类型" align="center" prop="approvalTypeId" >
         <template slot-scope="props">
@@ -254,7 +269,7 @@
         <template slot-scope="props">
           <el-tag v-if="props.row.aprrovalState == 1" type="success">通过</el-tag>
           <el-tag v-if="props.row.aprrovalState == 0" type="danger">未通过</el-tag>
-          <el-tag v-if="props.row.aprrovalState == 3">进行中</el-tag>
+          <el-tag v-if="props.row.aprrovalState == 2">进行中</el-tag>
         </template>
       </el-table-column>
 <!--      <el-table-column label="未通过原因" align="center" prop="reasonFailure" />-->
@@ -395,6 +410,9 @@ export default {
       }, {
         "label": "未通过",
         "value": 0
+      }, {
+        "label": "进行中",
+        "value": 2
       }],
       // 遮罩层
       loading: true,
