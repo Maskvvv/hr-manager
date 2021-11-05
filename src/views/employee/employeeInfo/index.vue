@@ -285,13 +285,13 @@
               <span>{{ props.row.wedlock }}</span>
             </el-form-item>
             <el-form-item label="民族">
-              <span>{{ props.row.nationid }}</span>
+              <span>{{ props.row.nationName }}</span>
             </el-form-item>
             <el-form-item label="籍贯">
               <span>{{ props.row.nativeplace }}</span>
             </el-form-item>
             <el-form-item label="政治面貌">
-              <span>{{ props.row.politicid }}</span>
+              <span>{{ props.row.politicName }}</span>
             </el-form-item>
             <el-form-item label="邮箱">
               <span>{{ props.row.email }}</span>
@@ -303,7 +303,7 @@
               <span>{{ props.row.address }}</span>
             </el-form-item>
             <el-form-item label="所属部门">
-              <span>{{ props.row.departmentid }}</span>
+              <span>{{ props.row.departmentName }}</span>
             </el-form-item>
             <el-form-item label="职称ID">
               <span>{{ props.row.joblevelid }}</span>
@@ -383,9 +383,9 @@
       </el-table-column>
 <!--      <el-table-column label="身份证号" align="center" prop="idcard" />-->
       <el-table-column label="婚姻状况" align="center" prop="wedlock" />
-      <el-table-column label="民族" align="center" prop="nationid" />
+      <el-table-column label="民族" align="center" prop="nationName" />
       <el-table-column label="籍贯" align="center" prop="nativeplace" />
-      <el-table-column label="政治面貌" align="center" prop="politicid" />
+      <el-table-column label="政治面貌" align="center" prop="politicName" />
 <!--      <el-table-column label="邮箱" align="center" prop="email" />-->
 <!--      <el-table-column label="电话号码" align="center" prop="phone" />-->
 <!--      <el-table-column label="联系地址" align="center" prop="address" />-->
