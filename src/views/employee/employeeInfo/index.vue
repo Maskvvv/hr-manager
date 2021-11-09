@@ -481,17 +481,30 @@
         </el-form-item>
         <el-form-item label="婚姻状况" prop="wedlock">
           <el-select v-model="form.wedlock" placeholder="请选择婚姻状况">
-            <el-option label="请选择字典生成" value="" />
+            <el-option label="已婚" value="已婚" />
+            <el-option label="未婚" value="未婚" />
           </el-select>
         </el-form-item>
         <el-form-item label="民族" prop="nationid">
-          <el-input v-model="form.nationid" placeholder="请输入民族" />
+          <el-select v-model="form.nationid" placeholder="请输入民族">
+            <el-option
+              v-for="item in nationList"
+              :label="item.name"
+              :value="item.id">
+            </el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="籍贯" prop="nativeplace">
           <el-input v-model="form.nativeplace" placeholder="请输入籍贯" />
         </el-form-item>
         <el-form-item label="政治面貌" prop="politicid">
-          <el-input v-model="form.politicid" placeholder="请输入政治面貌" />
+          <el-select v-model="form.politicid" placeholder="请输入政治面貌">
+            <el-option
+              v-for="item in politicList"
+              :label="item.name"
+              :value="item.id">
+            </el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="邮箱" prop="email">
           <el-input v-model="form.email" placeholder="请输入邮箱" />
@@ -504,89 +517,102 @@
         </el-form-item>
         <el-form-item label="所属部门" prop="departmentid">
           <el-select v-model="form.departmentid" placeholder="请选择所属部门">
-            <el-option label="请选择字典生成" value="" />
+            <el-option
+              v-for="item in departmentList"
+              :label="item.deptName"
+              :value="item.deptId">
+            </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="职称ID" prop="joblevelid">
-          <el-select v-model="form.joblevelid" placeholder="请选择职称ID">
-            <el-option label="请选择字典生成" value="" />
+        <el-form-item label="职称" prop="joblevelid">
+          <el-select v-model="form.joblevelid" placeholder="请选择职称">
+            <el-option
+              v-for="item in jobleveList"
+              :label="item.name"
+              :value="item.id">
+            </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="职位ID" prop="posid">
-          <el-select v-model="form.posid" placeholder="请选择职位ID">
-            <el-option label="请选择字典生成" value="" />
+        <el-form-item label="职位" prop="posid">
+          <el-select v-model="form.posid" placeholder="请选择职位">
+            <el-option
+              v-for="item in postList"
+              :label="item.postName"
+              :value="item.postId">
+            </el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="聘用形式" prop="engageform">
           <el-select v-model="form.engageform" placeholder="请选择聘用形式">
-            <el-option label="请选择字典生成" value="" />
+            <el-option label="劳动合同" value="劳动合同" />
+            <el-option label="劳务合同" value="劳务合同" />
           </el-select>
         </el-form-item>
-        <el-form-item label="最高学历" prop="tiptopdegree">
-          <el-select v-model="form.tiptopdegree" placeholder="请选择最高学历">
-            <el-option label="请选择字典生成" value="" />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="所属专业" prop="specialty">
-          <el-input v-model="form.specialty" placeholder="请输入所属专业" />
-        </el-form-item>
-        <el-form-item label="毕业院校" prop="school">
-          <el-input v-model="form.school" placeholder="请输入毕业院校" />
-        </el-form-item>
-        <el-form-item label="入职日期" prop="begindate">
-          <el-date-picker clearable size="small"
-            v-model="form.begindate"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="选择入职日期">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="在职状态" prop="workstate">
-          <el-select v-model="form.workstate" placeholder="请选择在职状态">
-            <el-option label="请选择字典生成" value="" />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="工号" prop="workid">
-          <el-input v-model="form.workid" placeholder="请输入工号" />
-        </el-form-item>
-        <el-form-item label="合同期限" prop="contractterm">
-          <el-input v-model="form.contractterm" placeholder="请输入合同期限" />
-        </el-form-item>
-        <el-form-item label="转正日期" prop="conversiontime">
-          <el-date-picker clearable size="small"
-            v-model="form.conversiontime"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="选择转正日期">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="离职日期" prop="notworkdate">
-          <el-date-picker clearable size="small"
-            v-model="form.notworkdate"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="选择离职日期">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="合同起始日期" prop="begincontract">
-          <el-date-picker clearable size="small"
-            v-model="form.begincontract"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="选择合同起始日期">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="合同终止日期" prop="endcontract">
-          <el-date-picker clearable size="small"
-            v-model="form.endcontract"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="选择合同终止日期">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="工龄" prop="workage">
-          <el-input v-model="form.workage" placeholder="请输入工龄" />
-        </el-form-item>
+<!--        <el-form-item label="最高学历" prop="tiptopdegree">-->
+<!--          <el-select v-model="form.tiptopdegree" placeholder="请选择最高学历">-->
+<!--            <el-option label="请选择字典生成" value="" />-->
+<!--          </el-select>-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="所属专业" prop="specialty">-->
+<!--          <el-input v-model="form.specialty" placeholder="请输入所属专业" />-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="毕业院校" prop="school">-->
+<!--          <el-input v-model="form.school" placeholder="请输入毕业院校" />-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="入职日期" prop="begindate">-->
+<!--          <el-date-picker clearable size="small"-->
+<!--            v-model="form.begindate"-->
+<!--            type="date"-->
+<!--            value-format="yyyy-MM-dd"-->
+<!--            placeholder="选择入职日期">-->
+<!--          </el-date-picker>-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="在职状态" prop="workstate">-->
+<!--          <el-select v-model="form.workstate" placeholder="请选择在职状态">-->
+<!--            <el-option label="请选择字典生成" value="" />-->
+<!--          </el-select>-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="工号" prop="workid">-->
+<!--          <el-input v-model="form.workid" placeholder="请输入工号" />-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="合同期限" prop="contractterm">-->
+<!--          <el-input v-model="form.contractterm" placeholder="请输入合同期限" />-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="转正日期" prop="conversiontime">-->
+<!--          <el-date-picker clearable size="small"-->
+<!--            v-model="form.conversiontime"-->
+<!--            type="date"-->
+<!--            value-format="yyyy-MM-dd"-->
+<!--            placeholder="选择转正日期">-->
+<!--          </el-date-picker>-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="离职日期" prop="notworkdate">-->
+<!--          <el-date-picker clearable size="small"-->
+<!--            v-model="form.notworkdate"-->
+<!--            type="date"-->
+<!--            value-format="yyyy-MM-dd"-->
+<!--            placeholder="选择离职日期">-->
+<!--          </el-date-picker>-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="合同起始日期" prop="begincontract">-->
+<!--          <el-date-picker clearable size="small"-->
+<!--            v-model="form.begincontract"-->
+<!--            type="date"-->
+<!--            value-format="yyyy-MM-dd"-->
+<!--            placeholder="选择合同起始日期">-->
+<!--          </el-date-picker>-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="合同终止日期" prop="endcontract">-->
+<!--          <el-date-picker clearable size="small"-->
+<!--            v-model="form.endcontract"-->
+<!--            type="date"-->
+<!--            value-format="yyyy-MM-dd"-->
+<!--            placeholder="选择合同终止日期">-->
+<!--          </el-date-picker>-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="工龄" prop="workage">-->
+<!--          <el-input v-model="form.workage" placeholder="请输入工龄" />-->
+<!--        </el-form-item>-->
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -598,12 +624,22 @@
 
 <script>
 import { listEmployeeInfo, getEmployeeInfo, delEmployeeInfo, addEmployeeInfo, updateEmployeeInfo, exportEmployeeInfo } from "@/api/employee/employeeInfo";
-
+import request from '@/utils/request'
 export default {
   name: "EmployeeInfo",
   dicts: ['sys_user_sex'],
   data() {
     return {
+      // 民族列表
+      nationList: [],
+      // 政治面貌列表
+      politicList: [],
+      // 部门列表
+      departmentList: [],
+      // 职称列表
+      jobleveList: [],
+      // 职位列表
+      postList: [],
       // 遮罩层
       loading: true,
       // 导出遮罩层
@@ -750,6 +786,57 @@ export default {
   },
   created() {
     this.getList();
+
+
+    /*// 民族列表
+      nationList: [],
+      // 政治面貌列表
+      politicList: [],
+      // 部门列表
+      departmentList: [],
+      // 职称列表
+      jobleveList: [],
+      // 职位列表
+      postList: [],
+      // 遮罩层*/
+
+    request({
+      url: '/employee/nation/list',
+      method: 'get',
+    }).then(response => {
+      console.log(response)
+      this.nationList = response
+    });
+
+    request({
+      url: '/employee/politicsStatus/list',
+      method: 'get',
+    }).then(response => {
+      this.politicList = response
+    });
+
+    request({
+      url: '/system/dept/listAll',
+      method: 'get',
+    }).then(response => {
+      this.departmentList = response
+    });
+
+    request({
+      url: '/employee/jobLevel/list',
+      method: 'get',
+    }).then(response => {
+      this.jobleveList = response
+    });
+
+    request({
+      url: '/system/post/listAll',
+      method: 'get',
+    }).then(response => {
+      this.postList = response
+    });
+
+
   },
   methods: {
     /** 查询员工信息管理列表 */
