@@ -8,20 +8,27 @@
     <div class="right-menu">
       <template v-if="device!=='mobile'">
         <search id="header-search" class="right-menu-item" />
-        
-        <el-tooltip content="源码地址" effect="dark" placement="bottom">
-          <ruo-yi-git id="ruoyi-git" class="right-menu-item hover-effect" />
-        </el-tooltip>
+<!--        -->
+<!--        <el-tooltip content="源码地址" effect="dark" placement="bottom">-->
+<!--          <ruo-yi-git id="ruoyi-git" class="right-menu-item hover-effect" />-->
+<!--        </el-tooltip>-->
+        <el-button type="info"
+                   icon="el-icon-message"
+                   class="right-menu-item-message"
+                   circle
+                   @click="goChat"
+        ></el-button>
 
-        <el-tooltip content="文档地址" effect="dark" placement="bottom">
-          <ruo-yi-doc id="ruoyi-doc" class="right-menu-item hover-effect" />
-        </el-tooltip>
 
-        <screenfull id="screenfull" class="right-menu-item hover-effect" />
+<!--        <el-tooltip content="文档地址" effect="dark" placement="bottom">-->
+<!--          <ruo-yi-doc id="ruoyi-doc" class="right-menu-item hover-effect" />-->
+<!--        </el-tooltip>-->
 
-        <el-tooltip content="布局大小" effect="dark" placement="bottom">
-          <size-select id="size-select" class="right-menu-item hover-effect" />
-        </el-tooltip>
+<!--        <screenfull id="screenfull" class="right-menu-item hover-effect" />-->
+
+<!--        <el-tooltip content="布局大小" effect="dark" placement="bottom">-->
+<!--          <size-select id="size-select" class="right-menu-item hover-effect" />-->
+<!--        </el-tooltip>-->
 
       </template>
 
@@ -92,6 +99,11 @@ export default {
     }
   },
   methods: {
+    goChat() {
+
+      this.$router.push('chat')
+    },
+
     toggleSideBar() {
       this.$store.dispatch('app/toggleSideBar')
     },
@@ -160,6 +172,24 @@ export default {
       height: 100%;
       font-size: 18px;
       color: #5a5e66;
+      vertical-align: text-bottom;
+
+      &.hover-effect {
+        cursor: pointer;
+        transition: background .3s;
+
+        &:hover {
+          background: rgba(0, 0, 0, .025)
+        }
+      }
+    }
+
+    .right-menu-item-message {
+      display: inline-block;
+      padding: 0 8px;
+      height: 75%;
+      font-size: 18px;
+      /*color: #5a5e66;*/
       vertical-align: text-bottom;
 
       &.hover-effect {

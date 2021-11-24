@@ -9,6 +9,22 @@ const name =  '人力资源管理系统' ||process.env.VUE_APP_TITLE// 网页标
 
 const port = process.env.port || process.env.npm_config_port || 80 // 端口
 
+let proxyObj = {}
+
+proxyObj['/'] = {
+  ws: false,
+  target: 'http://localhost:8080',
+  changeOrigin: true,
+  pathReWrite: {
+    '^/': '/'
+  }
+}
+
+proxyObj['/ws'] = {
+  ws: true,
+  target: 'ws://localhost:8080'
+}
+
 // vue.config.js 配置说明
 //官方vue.config.js 参考文档 https://cli.vuejs.org/zh/config/#css-loaderoptions
 // 这里只列一部分，具体配置参考文档
@@ -38,6 +54,10 @@ module.exports = {
         pathRewrite: {
           ['^' + process.env.VUE_APP_BASE_API]: ''
         }
+      },
+      '/ws':{
+        ws: true,
+        target: 'ws://localhost:8080'
       }
     },
     disableHostCheck: true

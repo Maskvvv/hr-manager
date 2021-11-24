@@ -210,15 +210,15 @@
           placeholder="选择合同终止日期">
         </el-date-picker>
       </el-form-item>
-      <el-form-item label="工龄" prop="workage">
-        <el-input
-          v-model="queryParams.workage"
-          placeholder="请输入工龄"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
+<!--      <el-form-item label="工龄" prop="workage">-->
+<!--        <el-input-->
+<!--          v-model="queryParams.workage"-->
+<!--          placeholder="请输入工龄"-->
+<!--          clearable-->
+<!--          size="small"-->
+<!--          @keyup.enter.native="handleQuery"-->
+<!--        />-->
+<!--      </el-form-item>-->
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -305,8 +305,9 @@
             <el-form-item label="所属部门">
               <span>{{ props.row.departmentName }}</span>
             </el-form-item>
-            <el-form-item label="职称ID">
-              <span>{{ props.row.joblevelid }}</span>
+            <el-form-item label="职称">
+<!--              <span>{{ props.row.joblevelid }}</span>-->
+              <span>{{ props.row.joblevelName }}</span>
             </el-form-item>
             <el-form-item label="聘用形式">
               <span>{{ props.row.engageform }}</span>
@@ -371,60 +372,16 @@
       <el-table-column label="员工编号" align="center" prop="id" />
       <el-table-column label="员工姓名" align="center" prop="name" />
       <el-table-column label="性别" align="center" prop="gender"/>
-<!--      <el-table-column label="性别" align="center" prop="gender">-->
-<!--        <template slot-scope="scope">-->
-<!--          <dict-tag :options="dict.type.sys_user_sex" :value="scope.row.gender"/>-->
-<!--        </template>-->
-<!--      </el-table-column>-->
       <el-table-column label="出生日期" align="center" prop="birthday" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.birthday, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-<!--      <el-table-column label="身份证号" align="center" prop="idcard" />-->
       <el-table-column label="婚姻状况" align="center" prop="wedlock" />
       <el-table-column label="民族" align="center" prop="nationName" />
       <el-table-column label="籍贯" align="center" prop="nativeplace" />
       <el-table-column label="政治面貌" align="center" prop="politicName" />
-<!--      <el-table-column label="邮箱" align="center" prop="email" />-->
-<!--      <el-table-column label="电话号码" align="center" prop="phone" />-->
-<!--      <el-table-column label="联系地址" align="center" prop="address" />-->
-<!--      <el-table-column label="所属部门" align="center" prop="departmentid" />-->
-<!--      <el-table-column label="职称ID" align="center" prop="joblevelid" />-->
-<!--      <el-table-column label="职位ID" align="center" prop="posid" />-->
-<!--      <el-table-column label="聘用形式" align="center" prop="engageform" />-->
-<!--      <el-table-column label="最高学历" align="center" prop="tiptopdegree" />-->
-<!--      <el-table-column label="所属专业" align="center" prop="specialty" />-->
-<!--      <el-table-column label="毕业院校" align="center" prop="school" />-->
-<!--      <el-table-column label="入职日期" align="center" prop="begindate" width="180">-->
-<!--        <template slot-scope="scope">-->
-<!--          <span>{{ parseTime(scope.row.begindate, '{y}-{m}-{d}') }}</span>-->
-<!--        </template>-->
-<!--      </el-table-column>-->
-<!--      <el-table-column label="在职状态" align="center" prop="workstate" />-->
-<!--      <el-table-column label="工号" align="center" prop="workid" />-->
-<!--      <el-table-column label="合同期限" align="center" prop="contractterm" />-->
-<!--      <el-table-column label="转正日期" align="center" prop="conversiontime" width="180">-->
-<!--        <template slot-scope="scope">-->
-<!--          <span>{{ parseTime(scope.row.conversiontime, '{y}-{m}-{d}') }}</span>-->
-<!--        </template>-->
-<!--      </el-table-column>-->
-<!--      <el-table-column label="离职日期" align="center" prop="notworkdate" width="180">-->
-<!--        <template slot-scope="scope">-->
-<!--          <span>{{ parseTime(scope.row.notworkdate, '{y}-{m}-{d}') }}</span>-->
-<!--        </template>-->
-<!--      </el-table-column>-->
-<!--      <el-table-column label="合同起始日期" align="center" prop="begincontract" width="180">-->
-<!--        <template slot-scope="scope">-->
-<!--          <span>{{ parseTime(scope.row.begincontract, '{y}-{m}-{d}') }}</span>-->
-<!--        </template>-->
-<!--      </el-table-column>-->
-<!--      <el-table-column label="合同终止日期" align="center" prop="endcontract" width="180">-->
-<!--        <template slot-scope="scope">-->
-<!--          <span>{{ parseTime(scope.row.endcontract, '{y}-{m}-{d}') }}</span>-->
-<!--        </template>-->
-<!--      </el-table-column>-->
-<!--      <el-table-column label="工龄" align="center" prop="workage" />-->
+      <el-table-column label="职位" align="center" prop="posName" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -548,52 +505,58 @@
             <el-option label="劳务合同" value="劳务合同" />
           </el-select>
         </el-form-item>
-<!--        <el-form-item label="最高学历" prop="tiptopdegree">-->
-<!--          <el-select v-model="form.tiptopdegree" placeholder="请选择最高学历">-->
-<!--            <el-option label="请选择字典生成" value="" />-->
-<!--          </el-select>-->
-<!--        </el-form-item>-->
-<!--        <el-form-item label="所属专业" prop="specialty">-->
-<!--          <el-input v-model="form.specialty" placeholder="请输入所属专业" />-->
-<!--        </el-form-item>-->
-<!--        <el-form-item label="毕业院校" prop="school">-->
-<!--          <el-input v-model="form.school" placeholder="请输入毕业院校" />-->
-<!--        </el-form-item>-->
-<!--        <el-form-item label="入职日期" prop="begindate">-->
-<!--          <el-date-picker clearable size="small"-->
-<!--            v-model="form.begindate"-->
-<!--            type="date"-->
-<!--            value-format="yyyy-MM-dd"-->
-<!--            placeholder="选择入职日期">-->
-<!--          </el-date-picker>-->
-<!--        </el-form-item>-->
-<!--        <el-form-item label="在职状态" prop="workstate">-->
-<!--          <el-select v-model="form.workstate" placeholder="请选择在职状态">-->
-<!--            <el-option label="请选择字典生成" value="" />-->
-<!--          </el-select>-->
-<!--        </el-form-item>-->
+        <el-form-item label="最高学历" prop="tiptopdegree">
+          <el-select v-model="form.tiptopdegree" placeholder="请选择最高学历">
+            <el-option label="初中" value="初中" />
+            <el-option label="高中" value="高中" />
+            <el-option label="本科" value="本科" />
+            <el-option label="硕士" value="硕士" />
+            <el-option label="博士" value="博士" />
+            <el-option label="博士后" value="博士后" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="所属专业" prop="specialty">
+          <el-input v-model="form.specialty" placeholder="请输入所属专业" />
+        </el-form-item>
+        <el-form-item label="毕业院校" prop="school">
+          <el-input v-model="form.school" placeholder="请输入毕业院校" />
+        </el-form-item>
+        <el-form-item label="入职日期" prop="begindate">
+          <el-date-picker clearable size="small"
+            v-model="form.begindate"
+            type="date"
+            value-format="yyyy-MM-dd"
+            placeholder="选择入职日期">
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="在职状态" prop="workstate">
+          <el-select v-model="form.workstate" placeholder="请选择在职状态">
+            <el-option label="在职" value="在职" />
+            <el-option label="离职" value="离职" />
+          </el-select>
+        </el-form-item>
 <!--        <el-form-item label="工号" prop="workid">-->
 <!--          <el-input v-model="form.workid" placeholder="请输入工号" />-->
 <!--        </el-form-item>-->
 <!--        <el-form-item label="合同期限" prop="contractterm">-->
 <!--          <el-input v-model="form.contractterm" placeholder="请输入合同期限" />-->
 <!--        </el-form-item>-->
-<!--        <el-form-item label="转正日期" prop="conversiontime">-->
-<!--          <el-date-picker clearable size="small"-->
-<!--            v-model="form.conversiontime"-->
-<!--            type="date"-->
-<!--            value-format="yyyy-MM-dd"-->
-<!--            placeholder="选择转正日期">-->
-<!--          </el-date-picker>-->
-<!--        </el-form-item>-->
-<!--        <el-form-item label="离职日期" prop="notworkdate">-->
-<!--          <el-date-picker clearable size="small"-->
-<!--            v-model="form.notworkdate"-->
-<!--            type="date"-->
-<!--            value-format="yyyy-MM-dd"-->
-<!--            placeholder="选择离职日期">-->
-<!--          </el-date-picker>-->
-<!--        </el-form-item>-->
+        <el-form-item label="转正日期" prop="conversiontime">
+          <el-date-picker clearable size="small"
+            v-model="form.conversiontime"
+            type="date"
+            value-format="yyyy-MM-dd"
+            placeholder="选择转正日期">
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="离职日期" prop="notworkdate">
+          <el-date-picker clearable size="small"
+            v-model="form.notworkdate"
+            type="date"
+            value-format="yyyy-MM-dd"
+            placeholder="选择离职日期">
+          </el-date-picker>
+        </el-form-item>
 <!--        <el-form-item label="合同起始日期" prop="begincontract">-->
 <!--          <el-date-picker clearable size="small"-->
 <!--            v-model="form.begincontract"-->

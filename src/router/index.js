@@ -5,6 +5,7 @@ Vue.use(Router)
 
 /* Layout */
 import Layout from '@/layout'
+import FriendChat from "../views/chat/FriendChat";
 
 /**
  * Note: 路由配置项
@@ -69,6 +70,12 @@ export const constantRoutes = [
         component: (resolve) => require(['@/views/index'], resolve),
         name: 'Index',
         meta: { title: '首页', icon: 'dashboard', affix: true }
+      },
+      {
+        path: '/chat',
+        component: FriendChat,
+        hidden: true,
+        name:'Chat'
       }
     ]
   },
