@@ -18,30 +18,41 @@ const now = new Date();
 
 const store = new Vuex.Store({
   state:{
-    sessions:[],
+    sessions:{},
     admins:[],
-    currentSessionId: null,
+    currentSession: null,
+    currentAdmin: {},
     filterKey:'',
     stomp: null
   },
   mutations:{
-    changeCurrentSessionId (state,id) {
-      state.currentSessionId = id;
+    changeCurrentSession (state,currentSession) {
+      state.currentSession = currentSession;
+    },
+    addCurrentAdmin (state,currentAdmin) {
+      state.currentAdmin = currentAdmin;
     },
     addMessage (state,msg) {
-      state.sessions[state.currentSessionId-1].messages.push({
-        content:msg,
+
+      let mss = state.sessions[state.currentAdmin.userName + '#' + msg.to];
+      if (!mss) {
+        // state.sessions[state.currentHr.username+'#'+msg.to] = [];
+        Vue.set(state.sessions, state.currentAdmin.userName + '#' + msg.to, []);
+      }
+      state.sessions[state.currentAdmin.userName  + '#' + msg.to].push({
+        content: msg.content,
         date: new Date(),
-        self:true
+        self: !msg.notSelf
       })
+
     },
     INIT_DATA (state) {
 
-      // let data = localStorage.getItem('vue-chat-session');
-      // //console.log(data)
-      // if (data) {
-      //   state.sessions = JSON.parse(data);
-      // }
+      let data = localStorage.getItem('vue-chat-session');
+      //console.log(data)
+      if (data) {
+        state.sessions = JSON.parse(data);
+      }
     },
     INIT_ADMINS(state, data) {
       // var arr2;
@@ -62,13 +73,29 @@ const store = new Vuex.Store({
       let token = 'Bearer ' + getToken()
       context.state.stomp.connect({}, success => {
         getUserProfile().then(res => {
+
+          context.state.currentAdmin = res.data;
+
           context.state.stomp.subscribe('/user/'+ res.data.userName +'/queue/chat', msg => {
-            console.log("-------------store-websocket---------")
-            console.log(msg)
+
+            let receiveMsg = JSON.parse(msg.body);
+
+            console.log("---------------------------------------receiveMsg")
+            console.log(receiveMsg)
+
+            // if (!context.state.currentSession || receiveMsg.from != context.state.currentSession.username) {
+              // Notification.info({
+              //   title: '【' + receiveMsg.fromNickname + '】发来一条消息',
+              //   message: receiveMsg.content.length > 10 ? receiveMsg.content.substr(0, 10) : receiveMsg.content,
+              //   position: 'bottom-right'
+              // })
+            //   Vue.set(context.state.isDot, context.state.currentAdmin.userName + '#' + receiveMsg.from, true);
+            // }
+            receiveMsg.notSelf = true;
+            receiveMsg.to = receiveMsg.from;
+            context.commit('addMessage', receiveMsg);
           })
         });
-
-
 
       }, error => {
         // display the error's message header:
@@ -76,7 +103,14 @@ const store = new Vuex.Store({
       })
     },
     initData (context) {
+      context.commit('INIT_DATA')
+
       listUser().then(res => {
+        // for (let user in res.rows.length()) {
+        //   if (user.userName == context.state.currentAdmin.userName) {
+        //     res.rows
+        //   }
+        // }
         context.commit('INIT_ADMINS', res.rows)
       })
     }

@@ -18,28 +18,36 @@ export default {
 
     }
   },
+
+  computed:mapState([
+    'currentSession'
+  ]),
+
   methods: {
   	addMessage (e) {
   		if (e.ctrlKey && e.keyCode ===13 && this.content.length) {
-  			// this.$store.commit('addMessage',this.content);
-  			// this.content='';
-
         let msgObj = new Object();
-        msgObj.to = 'ry';
+        msgObj.to = this.currentSession.userName;
         msgObj.content = this.content;
         msgObj.from = this.userName;
         msgObj.fromNickname = this.nickName;
         this.$store.state.stomp.send('/ws/chat', {}, JSON.stringify(msgObj))
+        this.$store.commit('addMessage', msgObj);
+        this.content='';
 
   		}
   	}
   },
   created() {
-    getUserProfile().then(res => {
-      // /profile/avatar/2021/11/22/6d300837-4792-4056-ad26-c641fb2cef82.jpeg
-      this.nickName = res.data.nickName
-      this.userName = res.data.userName
-    });
+    // getUserProfile().then(res => {
+    //   // /profile/avatar/2021/11/22/6d300837-4792-4056-ad26-c641fb2cef82.jpeg
+    //   this.nickName = res.data.nickName
+    //   this.userName = res.data.userName
+    // });
+
+      this.nickName = this.$store.state.currentAdmin.nickName
+      this.userName = this.$store.state.currentAdmin.userName
+
   }
 }
 </script>

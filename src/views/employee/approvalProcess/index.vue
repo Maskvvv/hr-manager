@@ -187,7 +187,7 @@
                               placement="top">
               <el-card>
                 <h4>审批结果</h4>
-                <p>{{ props.row.approvalState == 1? "审批通过" : "审批未通过"}}</p>
+                <p>{{ props.row.aprrovalState == 1? "审批通过" : "审批未通过"}}</p>
               </el-card>
             </el-timeline-item>
             <el-timeline-item v-if="props.row.ceoApprovalState != 2"
@@ -403,7 +403,7 @@
       <div class="block" align="center">
         <el-image
           style="width: 350px; height: 500px;"
-          src="http://zhouhongyin.top/upload/2021/10/%E5%AE%A1%E6%89%B9%E6%B5%81%E7%A8%8B-d829cc147d9a4ed4ad1ea1ee8c80a8ce.png"
+          src="https://gitee.com/Maskvvv/photo/raw/master/2021/12/2/1638426745842-1638426745849.png"
           fit="fill"></el-image>
       </div>
     </el-dialog>

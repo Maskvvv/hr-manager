@@ -28,12 +28,17 @@ export default {
   },
   methods: {
     cardGetUser() {
-      getUserProfile().then(res => {
-        // /profile/avatar/2021/11/22/6d300837-4792-4056-ad26-c641fb2cef82.jpeg
-        this.user.name = res.data.nickName
-        this.user.img = process.env.VUE_APP_BASE_API + res.data.avatar
-        // console.log(res)
-      });
+      // getUserProfile().then(res => {
+      //   // /profile/avatar/2021/11/22/6d300837-4792-4056-ad26-c641fb2cef82.jpeg
+      //   this.user.name = res.data.nickName
+      //   this.user.img = process.env.VUE_APP_BASE_API + res.data.avatar
+      //   // console.log(res)
+      // });
+      var user = this.$store.state.currentAdmin
+      console.log("---------------------------------------card")
+      console.log(user)
+      this.user.name = user.nickName
+      this.user.img = process.env.VUE_APP_BASE_API + user.avatar
     },
 
 

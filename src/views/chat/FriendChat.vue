@@ -16,6 +16,8 @@
   import list from '../../components/chat/list'
   import message from '../../components/chat/message'
   import usertext from '../../components/chat/usertext'
+  import { getUserProfile } from "@/api/system/user";
+  import store from "../../store";
 
   export default {
     name: 'FriendChat',
@@ -32,6 +34,18 @@
       list,
       message,
       usertext
+    },
+    created() {
+      getUserProfile().then(res => {
+        this.$store.state.currentAdmin = res.data;
+
+      })
+
+      // this.$store.state.sessions = JSON.parse(localStorage.getItem("vue-chat-session"))
+      //
+      // console.log("--------------------------------this.$store.state.sessions")
+      // console.log(this.$store.state.sessions)
+
     }
   }
 </script>
