@@ -152,7 +152,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -164,8 +164,18 @@
     <!-- 添加或修改招聘信息对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="部门id" prop="deptId">
-          <el-input v-model="form.deptId" placeholder="请输入部门id" />
+<!--        <el-form-item label="部门id" prop="deptId">-->
+<!--          <el-input v-model="form.deptId" placeholder="请输入部门id" />-->
+<!--        </el-form-item>-->
+
+        <el-form-item label="所属部门" prop="departmentid">
+          <el-select v-model="form.deptId" placeholder="请选择所属部门">
+            <el-option
+              v-for="item in departmentList"
+              :label="item.deptName"
+              :value="item.deptId">
+            </el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="招聘人数" prop="pepoleNum">
           <el-input v-model="form.pepoleNum" placeholder="请输入招聘人数" />
@@ -193,11 +203,13 @@
 
 <script>
 import { listRecruit_info, getRecruit_info, delRecruit_info, addRecruit_info, updateRecruit_info, exportRecruit_info } from "@/api/recruit/recruit_info";
+import request from "@/utils/request";
 
 export default {
   name: "Recruit_info",
   data() {
     return {
+      departmentList: [],
       // 遮罩层
       loading: true,
       // 导出遮罩层
@@ -244,6 +256,12 @@ export default {
   },
   created() {
     this.getList();
+    request({
+      url: '/system/dept/listAll',
+      method: 'get',
+    }).then(response => {
+      this.departmentList = response
+    });
   },
   methods: {
     /** 查询招聘信息列表 */

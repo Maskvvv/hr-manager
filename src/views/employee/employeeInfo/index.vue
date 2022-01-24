@@ -20,209 +20,209 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="出生日期">
-        <el-date-picker
-          v-model="daterangeBirthday"
-          size="small"
-          style="width: 240px"
-          value-format="yyyy-MM-dd"
-          type="daterange"
-          range-separator="-"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
-        ></el-date-picker>
-      </el-form-item>
-      <el-form-item label="身份证号" prop="idcard">
-        <el-input
-          v-model="queryParams.idcard"
-          placeholder="请输入身份证号"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="婚姻状况" prop="wedlock">
-        <el-select v-model="queryParams.wedlock" placeholder="请选择婚姻状况" clearable size="small">
-          <el-option label="请选择字典生成" value="" />
-        </el-select>
-      </el-form-item>
-      <el-form-item label="民族" prop="nationid">
-        <el-input
-          v-model="queryParams.nationid"
-          placeholder="请输入民族"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="籍贯" prop="nativeplace">
-        <el-input
-          v-model="queryParams.nativeplace"
-          placeholder="请输入籍贯"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="政治面貌" prop="politicid">
-        <el-input
-          v-model="queryParams.politicid"
-          placeholder="请输入政治面貌"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="邮箱" prop="email">
-        <el-input
-          v-model="queryParams.email"
-          placeholder="请输入邮箱"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="电话号码" prop="phone">
-        <el-input
-          v-model="queryParams.phone"
-          placeholder="请输入电话号码"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="联系地址" prop="address">
-        <el-input
-          v-model="queryParams.address"
-          placeholder="请输入联系地址"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="所属部门" prop="departmentid">
-        <el-select v-model="queryParams.departmentid" placeholder="请选择所属部门" clearable size="small">
-          <el-option label="请选择字典生成" value="" />
-        </el-select>
-      </el-form-item>
-      <el-form-item label="职称ID" prop="joblevelid">
-        <el-select v-model="queryParams.joblevelid" placeholder="请选择职称ID" clearable size="small">
-          <el-option label="请选择字典生成" value="" />
-        </el-select>
-      </el-form-item>
-      <el-form-item label="职位ID" prop="posid">
-        <el-select v-model="queryParams.posid" placeholder="请选择职位ID" clearable size="small">
-          <el-option label="请选择字典生成" value="" />
-        </el-select>
-      </el-form-item>
-      <el-form-item label="聘用形式" prop="engageform">
-        <el-select v-model="queryParams.engageform" placeholder="请选择聘用形式" clearable size="small">
-          <el-option label="请选择字典生成" value="" />
-        </el-select>
-      </el-form-item>
-      <el-form-item label="最高学历" prop="tiptopdegree">
-        <el-select v-model="queryParams.tiptopdegree" placeholder="请选择最高学历" clearable size="small">
-          <el-option label="请选择字典生成" value="" />
-        </el-select>
-      </el-form-item>
-      <el-form-item label="所属专业" prop="specialty">
-        <el-input
-          v-model="queryParams.specialty"
-          placeholder="请输入所属专业"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="毕业院校" prop="school">
-        <el-input
-          v-model="queryParams.school"
-          placeholder="请输入毕业院校"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="入职日期" prop="begindate">
-        <el-date-picker clearable size="small"
-          v-model="queryParams.begindate"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="选择入职日期">
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item label="在职状态" prop="workstate">
-        <el-select v-model="queryParams.workstate" placeholder="请选择在职状态" clearable size="small">
-          <el-option label="请选择字典生成" value="" />
-        </el-select>
-      </el-form-item>
-      <el-form-item label="工号" prop="workid">
-        <el-input
-          v-model="queryParams.workid"
-          placeholder="请输入工号"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="合同期限" prop="contractterm">
-        <el-input
-          v-model="queryParams.contractterm"
-          placeholder="请输入合同期限"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="转正日期" prop="conversiontime">
-        <el-date-picker clearable size="small"
-          v-model="queryParams.conversiontime"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="选择转正日期">
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item label="离职日期">
-        <el-date-picker
-          v-model="daterangeNotworkdate"
-          size="small"
-          style="width: 240px"
-          value-format="yyyy-MM-dd"
-          type="daterange"
-          range-separator="-"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
-        ></el-date-picker>
-      </el-form-item>
-      <el-form-item label="合同起始日期" prop="begincontract">
-        <el-date-picker clearable size="small"
-          v-model="queryParams.begincontract"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="选择合同起始日期">
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item label="合同终止日期" prop="endcontract">
-        <el-date-picker clearable size="small"
-          v-model="queryParams.endcontract"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="选择合同终止日期">
-        </el-date-picker>
-      </el-form-item>
-<!--      <el-form-item label="工龄" prop="workage">-->
+<!--      <el-form-item label="出生日期">-->
+<!--        <el-date-picker-->
+<!--          v-model="daterangeBirthday"-->
+<!--          size="small"-->
+<!--          style="width: 240px"-->
+<!--          value-format="yyyy-MM-dd"-->
+<!--          type="daterange"-->
+<!--          range-separator="-"-->
+<!--          start-placeholder="开始日期"-->
+<!--          end-placeholder="结束日期"-->
+<!--        ></el-date-picker>-->
+<!--      </el-form-item>-->
+<!--      <el-form-item label="身份证号" prop="idcard">-->
 <!--        <el-input-->
-<!--          v-model="queryParams.workage"-->
-<!--          placeholder="请输入工龄"-->
+<!--          v-model="queryParams.idcard"-->
+<!--          placeholder="请输入身份证号"-->
 <!--          clearable-->
 <!--          size="small"-->
 <!--          @keyup.enter.native="handleQuery"-->
 <!--        />-->
 <!--      </el-form-item>-->
-      <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
-      </el-form-item>
+<!--      <el-form-item label="婚姻状况" prop="wedlock">-->
+<!--        <el-select v-model="queryParams.wedlock" placeholder="请选择婚姻状况" clearable size="small">-->
+<!--          <el-option label="请选择字典生成" value="" />-->
+<!--        </el-select>-->
+<!--      </el-form-item>-->
+<!--      <el-form-item label="民族" prop="nationid">-->
+<!--        <el-input-->
+<!--          v-model="queryParams.nationid"-->
+<!--          placeholder="请输入民族"-->
+<!--          clearable-->
+<!--          size="small"-->
+<!--          @keyup.enter.native="handleQuery"-->
+<!--        />-->
+<!--      </el-form-item>-->
+<!--      <el-form-item label="籍贯" prop="nativeplace">-->
+<!--        <el-input-->
+<!--          v-model="queryParams.nativeplace"-->
+<!--          placeholder="请输入籍贯"-->
+<!--          clearable-->
+<!--          size="small"-->
+<!--          @keyup.enter.native="handleQuery"-->
+<!--        />-->
+<!--      </el-form-item>-->
+<!--      <el-form-item label="政治面貌" prop="politicid">-->
+<!--        <el-input-->
+<!--          v-model="queryParams.politicid"-->
+<!--          placeholder="请输入政治面貌"-->
+<!--          clearable-->
+<!--          size="small"-->
+<!--          @keyup.enter.native="handleQuery"-->
+<!--        />-->
+<!--      </el-form-item>-->
+<!--      <el-form-item label="邮箱" prop="email">-->
+<!--        <el-input-->
+<!--          v-model="queryParams.email"-->
+<!--          placeholder="请输入邮箱"-->
+<!--          clearable-->
+<!--          size="small"-->
+<!--          @keyup.enter.native="handleQuery"-->
+<!--        />-->
+<!--      </el-form-item>-->
+<!--      <el-form-item label="电话号码" prop="phone">-->
+<!--        <el-input-->
+<!--          v-model="queryParams.phone"-->
+<!--          placeholder="请输入电话号码"-->
+<!--          clearable-->
+<!--          size="small"-->
+<!--          @keyup.enter.native="handleQuery"-->
+<!--        />-->
+<!--      </el-form-item>-->
+<!--      <el-form-item label="联系地址" prop="address">-->
+<!--        <el-input-->
+<!--          v-model="queryParams.address"-->
+<!--          placeholder="请输入联系地址"-->
+<!--          clearable-->
+<!--          size="small"-->
+<!--          @keyup.enter.native="handleQuery"-->
+<!--        />-->
+<!--      </el-form-item>-->
+<!--      <el-form-item label="所属部门" prop="departmentid">-->
+<!--        <el-select v-model="queryParams.departmentid" placeholder="请选择所属部门" clearable size="small">-->
+<!--          <el-option label="请选择字典生成" value="" />-->
+<!--        </el-select>-->
+<!--      </el-form-item>-->
+<!--      <el-form-item label="职称ID" prop="joblevelid">-->
+<!--        <el-select v-model="queryParams.joblevelid" placeholder="请选择职称ID" clearable size="small">-->
+<!--          <el-option label="请选择字典生成" value="" />-->
+<!--        </el-select>-->
+<!--      </el-form-item>-->
+<!--      <el-form-item label="职位ID" prop="posid">-->
+<!--        <el-select v-model="queryParams.posid" placeholder="请选择职位ID" clearable size="small">-->
+<!--          <el-option label="请选择字典生成" value="" />-->
+<!--        </el-select>-->
+<!--      </el-form-item>-->
+<!--      <el-form-item label="聘用形式" prop="engageform">-->
+<!--        <el-select v-model="queryParams.engageform" placeholder="请选择聘用形式" clearable size="small">-->
+<!--          <el-option label="请选择字典生成" value="" />-->
+<!--        </el-select>-->
+<!--      </el-form-item>-->
+<!--      <el-form-item label="最高学历" prop="tiptopdegree">-->
+<!--        <el-select v-model="queryParams.tiptopdegree" placeholder="请选择最高学历" clearable size="small">-->
+<!--          <el-option label="请选择字典生成" value="" />-->
+<!--        </el-select>-->
+<!--      </el-form-item>-->
+<!--      <el-form-item label="所属专业" prop="specialty">-->
+<!--        <el-input-->
+<!--          v-model="queryParams.specialty"-->
+<!--          placeholder="请输入所属专业"-->
+<!--          clearable-->
+<!--          size="small"-->
+<!--          @keyup.enter.native="handleQuery"-->
+<!--        />-->
+<!--      </el-form-item>-->
+<!--      <el-form-item label="毕业院校" prop="school">-->
+<!--        <el-input-->
+<!--          v-model="queryParams.school"-->
+<!--          placeholder="请输入毕业院校"-->
+<!--          clearable-->
+<!--          size="small"-->
+<!--          @keyup.enter.native="handleQuery"-->
+<!--        />-->
+<!--      </el-form-item>-->
+<!--      <el-form-item label="入职日期" prop="begindate">-->
+<!--        <el-date-picker clearable size="small"-->
+<!--          v-model="queryParams.begindate"-->
+<!--          type="date"-->
+<!--          value-format="yyyy-MM-dd"-->
+<!--          placeholder="选择入职日期">-->
+<!--        </el-date-picker>-->
+<!--      </el-form-item>-->
+<!--      <el-form-item label="在职状态" prop="workstate">-->
+<!--        <el-select v-model="queryParams.workstate" placeholder="请选择在职状态" clearable size="small">-->
+<!--          <el-option label="请选择字典生成" value="" />-->
+<!--        </el-select>-->
+<!--      </el-form-item>-->
+<!--      <el-form-item label="工号" prop="workid">-->
+<!--        <el-input-->
+<!--          v-model="queryParams.workid"-->
+<!--          placeholder="请输入工号"-->
+<!--          clearable-->
+<!--          size="small"-->
+<!--          @keyup.enter.native="handleQuery"-->
+<!--        />-->
+<!--      </el-form-item>-->
+<!--      <el-form-item label="合同期限" prop="contractterm">-->
+<!--        <el-input-->
+<!--          v-model="queryParams.contractterm"-->
+<!--          placeholder="请输入合同期限"-->
+<!--          clearable-->
+<!--          size="small"-->
+<!--          @keyup.enter.native="handleQuery"-->
+<!--        />-->
+<!--      </el-form-item>-->
+<!--      <el-form-item label="转正日期" prop="conversiontime">-->
+<!--        <el-date-picker clearable size="small"-->
+<!--          v-model="queryParams.conversiontime"-->
+<!--          type="date"-->
+<!--          value-format="yyyy-MM-dd"-->
+<!--          placeholder="选择转正日期">-->
+<!--        </el-date-picker>-->
+<!--      </el-form-item>-->
+<!--      <el-form-item label="离职日期">-->
+<!--        <el-date-picker-->
+<!--          v-model="daterangeNotworkdate"-->
+<!--          size="small"-->
+<!--          style="width: 240px"-->
+<!--          value-format="yyyy-MM-dd"-->
+<!--          type="daterange"-->
+<!--          range-separator="-"-->
+<!--          start-placeholder="开始日期"-->
+<!--          end-placeholder="结束日期"-->
+<!--        ></el-date-picker>-->
+<!--      </el-form-item>-->
+<!--      <el-form-item label="合同起始日期" prop="begincontract">-->
+<!--        <el-date-picker clearable size="small"-->
+<!--          v-model="queryParams.begincontract"-->
+<!--          type="date"-->
+<!--          value-format="yyyy-MM-dd"-->
+<!--          placeholder="选择合同起始日期">-->
+<!--        </el-date-picker>-->
+<!--      </el-form-item>-->
+<!--      <el-form-item label="合同终止日期">-->
+<!--        <el-date-picker clearable size="small"-->
+<!--          v-model="queryParams.endcontract"-->
+<!--          type="date"-->
+<!--          value-format="yyyy-MM-dd"-->
+<!--          placeholder="选择合同终止日期">-->
+<!--        </el-date-picker>-->
+<!--      </el-form-item>-->
+<!--&lt;!&ndash;      <el-form-item label="工龄" prop="workage">&ndash;&gt;-->
+<!--&lt;!&ndash;        <el-input&ndash;&gt;-->
+<!--&lt;!&ndash;          v-model="queryParams.workage"&ndash;&gt;-->
+<!--&lt;!&ndash;          placeholder="请输入工龄"&ndash;&gt;-->
+<!--&lt;!&ndash;          clearable&ndash;&gt;-->
+<!--&lt;!&ndash;          size="small"&ndash;&gt;-->
+<!--&lt;!&ndash;          @keyup.enter.native="handleQuery"&ndash;&gt;-->
+<!--&lt;!&ndash;        />&ndash;&gt;-->
+<!--&lt;!&ndash;      </el-form-item>&ndash;&gt;-->
+<!--      <el-form-item>-->
+<!--        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>-->
+<!--        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>-->
+<!--      </el-form-item>-->
     </el-form>
 
     <el-row :gutter="10" class="mb8">
@@ -414,7 +414,7 @@
     <el-dialog :title="title" :visible.sync="open" width="80%" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="员工姓名" prop="name">
-          <el-input v-model="form.name" placeholder="请输入员工姓名" />
+          <el-input v-model="form.name" placeholder="请输入员工姓名" value="张三"/>
         </el-form-item>
         <el-form-item label="性别">
           <el-radio-group v-model="form.gender">
@@ -434,7 +434,7 @@
           </el-date-picker>
         </el-form-item>
         <el-form-item label="身份证号" prop="idcard">
-          <el-input v-model="form.idcard" placeholder="请输入身份证号" />
+          <el-input v-model="form.idcard" placeholder="请输入身份证号" value="371322198011100016"/>
         </el-form-item>
         <el-form-item label="婚姻状况" prop="wedlock">
           <el-select v-model="form.wedlock" placeholder="请选择婚姻状况">
@@ -452,7 +452,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="籍贯" prop="nativeplace">
-          <el-input v-model="form.nativeplace" placeholder="请输入籍贯" />
+          <el-input v-model="form.nativeplace" placeholder="请输入籍贯" value="山东青岛" />
         </el-form-item>
         <el-form-item label="政治面貌" prop="politicid">
           <el-select v-model="form.politicid" placeholder="请输入政治面貌">
@@ -464,13 +464,13 @@
           </el-select>
         </el-form-item>
         <el-form-item label="邮箱" prop="email">
-          <el-input v-model="form.email" placeholder="请输入邮箱" />
+          <el-input v-model="form.email" placeholder="请输入邮箱" value="2668989410@qq.com"/>
         </el-form-item>
         <el-form-item label="电话号码" prop="phone">
-          <el-input v-model="form.phone" placeholder="请输入电话号码" />
+          <el-input v-model="form.phone" placeholder="请输入电话号码" value="17662222222"/>
         </el-form-item>
         <el-form-item label="联系地址" prop="address">
-          <el-input v-model="form.address" placeholder="请输入联系地址" />
+          <el-input v-model="form.address" placeholder="请输入联系地址" value="山东"/>
         </el-form-item>
         <el-form-item label="所属部门" prop="departmentid">
           <el-select v-model="form.departmentid" placeholder="请选择所属部门">
@@ -519,7 +519,7 @@
           <el-input v-model="form.specialty" placeholder="请输入所属专业" />
         </el-form-item>
         <el-form-item label="毕业院校" prop="school">
-          <el-input v-model="form.school" placeholder="请输入毕业院校" />
+          <el-input v-model="form.school" placeholder="请输入毕业院校" value="山东大学"/>
         </el-form-item>
         <el-form-item label="入职日期" prop="begindate">
           <el-date-picker clearable size="small"
@@ -549,7 +549,7 @@
             placeholder="选择转正日期">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="离职日期" prop="notworkdate">
+        <el-form-item label="离职日期">
           <el-date-picker clearable size="small"
             v-model="form.notworkdate"
             type="date"
@@ -660,7 +660,7 @@ export default {
         workage: null
       },
       // 表单参数
-      form: {},
+      form: {"searchValue":null,"createBy":null,"createTime":null,"updateBy":null,"updateTime":null,"remark":null,"params":{},"name":"张三","gender":"0","birthday":"1989-02-01","idcard":"421288198902011234","wedlock":"已婚","nationid":1,"nationName":"汉族","nativeplace":"海南","politicid":1,"politicName":"中共党员","email":"2668989410@qq.com","phone":"18795556693","address":"海南省海口市美兰区","departmentid":103,"departmentName":"研发部门","joblevelid":12,"joblevelName":"助教","posid":4,"posName":"普通员工","engageform":"劳动合同","tiptopdegree":"高中","specialty":"市场营销","school":"武汉大学","begindate":"2015-06-09","workstate":"在职","workid":"00000002","contractterm":3,"conversiontime":"2015-09-10","notworkdate":"2022-12-31","begincontract":"2015-06-09","endcontract":"2018-06-08","workage":null},
       // 表单校验
       rules: {
         name: [
@@ -879,7 +879,7 @@ export default {
     },
     /** 新增按钮操作 */
     handleAdd() {
-      this.reset();
+      // this.reset();
       this.open = true;
       this.title = "添加员工信息管理";
     },

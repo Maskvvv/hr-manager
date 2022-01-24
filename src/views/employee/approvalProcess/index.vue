@@ -283,7 +283,10 @@
           <span>{{ parseTime(scope.row.creatTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作"
+                       align="center"
+                       class-name="small-padding fixed-width"
+                       v-hasPermi="['employee:approvalProcess:edit']">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -296,10 +299,10 @@
             size="mini"
             type="text"
             icon="el-icon-close"
-            @click="open = true"
+            @click="getApprovalProcessInfo(scope.row)"
             v-hasPermi="['employee:approvalProcess:edit']"
           >拒绝</el-button>
-          <el-dropdown size="mini" @command="(command) => handleCommand(command, scope.row)" v-hasPermi="['monitor:job:changeStatus', 'monitor:job:query']">
+          <el-dropdown size="mini" @command="(command) => handleCommand(command, scope.row)" v-hasPermi="['employee:approvalProcess:edit']">
             <span class="el-dropdown-link">
               <i class="el-icon-d-arrow-right el-icon--right"></i>更多
             </span>
@@ -398,6 +401,20 @@
       </div>
     </el-dialog>
 
+    <!-- 拒绝审批管理对话框 -->
+    <el-dialog :title="title" :visible.sync="RefuseOpen" width="500px" append-to-body>
+
+      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+          <el-form-item label="未通过原因" prop="reasonFailure">
+            <el-input v-model="form.reasonFailure" type="textarea" placeholder="请输入内容" />
+          </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="refuseForm()">确 定</el-button>
+        <el-button @click="RefuseOpen = false">取 消</el-button>
+      </div>
+    </el-dialog>
+
     <!--审批流程弹出框-->
     <el-dialog title="审批流程示意图" :visible.sync="viewApprovalProcessOpen" append-to-body>
       <div class="block" align="center">
@@ -447,6 +464,7 @@ export default {
       title: "",
       // 是否显示弹出层
       open: false,
+      RefuseOpen: false,
       viewApprovalProcessOpen: false,
       // 创建时间时间范围
       daterangeDeptApprovalTime: [],
@@ -630,13 +648,41 @@ export default {
     handleUpdate(row) {
       this.reset();
       const id = row.id || this.ids
+      var approvalProcess = {}
+      approvalProcess["id"] = id
+      approvalProcess['operation'] = 'update'
+      updateApprovalProcess(approvalProcess).then(response => {
+        // this.form = response.data;
+        // this.open = true;
+        // this.title = "修改审批管理";
+        this.$modal.msgSuccess("修改成功");
+        this.getList();
+      });
+    },
+
+    getApprovalProcessInfo(row){
+      const id = row.id || this.ids
       getApprovalProcess(id).then(response => {
         this.form = response.data;
-        this.open = true;
+        this.RefuseOpen = true;
         this.title = "修改审批管理";
       });
     },
+
     /** 提交按钮 */
+    refuseForm() {
+      this.$refs["form"].validate(valid => {
+        if (valid) {
+          this.form['operation'] = 'refuse'
+          updateApprovalProcess(this.form).then(response => {
+            this.$modal.msgSuccess("拒绝成功");
+            this.RefuseOpen = false;
+            this.getList();
+          });
+        }
+      });
+    },
+
     submitForm() {
       this.$refs["form"].validate(valid => {
         if (valid) {
