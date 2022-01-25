@@ -63,6 +63,43 @@
     </el-row>
     <!--列表-->
     <el-table v-loading="loading" :data="applyList" @selection-change="handleSelectionChange">
+      <el-table-column type="expand">
+        <template slot-scope="scope">
+          <el-timeline>
+            <el-timeline-item v-if="scope.row.aprrovalState != 2"
+                              :timestamp="parseTime(scope.row.passTime)"
+                              :color="scope.row.aprrovalState == 1 ? '#67C23A' : '#F56C6C'"
+                              size="large"
+                              :icon="scope.row.aprrovalState == 1 ? 'el-icon-check' :'el-icon-close'"
+                              placement="top">
+              <el-card>
+                <p>{{ scope.row.aprrovalState == 1? "审批通过" : "审批未通过"}}</p>
+              </el-card>
+            </el-timeline-item>
+
+            <el-timeline-item v-if="scope.row.aprrovalState != 2"
+                              :timestamp="parseTime(scope.row.passTime)"
+                              :color="scope.row.aprrovalState == 1 ? '#67C23A' : '#F56C6C'"
+                              size="large"
+                              :icon="scope.row.aprrovalState == 1 ? 'el-icon-success' :'el-icon-warning-outline'"
+                              placement="top">
+              <el-card>
+                <h4>负责人审批</h4>
+                <p>{{scope.row.approvalUser.nickName}} {{ scope.row.aprrovalState == 1 ? "同意" : "拒绝"}}</p>
+                <p v-if="scope.row.aprrovalState == 0">{{ scope.row.reasonFailure }}</p>
+              </el-card>
+            </el-timeline-item>
+
+            <el-timeline-item :timestamp="parseTime(scope.row.creatTime)" placement="top">
+              <el-card>
+                <h4><dict-tag :options="dict.type.hr_approval_type" :value="scope.row.approvalType"/></h4>
+                <p>{{scope.row.approvalUser.nickName}} 提交于 {{scope.row.creatTime}}</p>
+              </el-card>
+            </el-timeline-item>
+          </el-timeline>
+        </template>
+      </el-table-column>
+
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="审批类型" align="center" prop="approvalType">
         <template slot-scope="scope">
@@ -71,7 +108,7 @@
       </el-table-column>
       <el-table-column label="审批人" align="center" prop="approvalUser.nickName" />
       <el-table-column label="审批内容" align="center" prop="approvalRemark" />
-      <el-table-column label="申请人id" align="center" prop="applyUser.nickName" />
+      <el-table-column label="申请人" align="center" prop="applyUser.nickName" />
       <el-table-column label="审批状态" align="center" prop="aprrovalState">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.hr_approval_state" :value="scope.row.aprrovalState"/>

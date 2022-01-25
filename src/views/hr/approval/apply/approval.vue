@@ -84,7 +84,7 @@
       </el-table-column>
       <el-table-column label="审批人" align="center" prop="approvalUser.nickName" />
       <el-table-column label="审批内容" align="center" prop="approvalRemark" />
-      <el-table-column label="申请人id" align="center" prop="applyUser.nickName" />
+      <el-table-column label="申请人" align="center" prop="applyUser.nickName" />
       <el-table-column label="审批状态" align="center" prop="aprrovalState">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.hr_approval_state" :value="scope.row.aprrovalState"/>
