@@ -37,13 +37,35 @@
 
       </el-col>
 
-      <!--      <el-col :sm="24" :lg="12">-->
-      <!--        <el-card>-->
-      <!--          test-->
-      <!--        </el-card>-->
-      <!--      </el-col>-->
+      <el-col :sm="24" :lg="6">
+        <el-card class="update-log">
+          <div slot="header" class="clearfix">
+            <i class="el-icon-user-solid" style="color: #F56C6C"></i><span>职位数量</span>
+          </div>
+          <div class="body" style="text-align: center">
+            <h2>34</h2>
+          </div>
+        </el-card>
 
+      </el-col>
     </el-row>
+
+    <!--echars-->
+    <el-row justify="start" type="flex" :gutter="20" style="padding-top: 20px">
+      <el-col :sm="24" :lg="12">
+        <el-card class="update-log">
+          <div id="cityJob" style="width: 600px; height:400px;"></div>
+        </el-card>
+      </el-col>
+
+      <el-col :sm="24" :lg="12">
+        <el-card class="update-log">
+          <div id="cityJobMap" style="width: 600px; height:400px;"></div>
+        </el-card>
+      </el-col>
+    </el-row>
+
+    <!--echars-->
 
     <el-row :gutter="20">
       <el-col :sm="24" :lg="12" style="padding-left: 20px">
@@ -137,19 +159,85 @@
 </template>
 
 <script>
+import * as echarts from 'echarts';
+import request from "@/utils/request";
 export default {
   name: "index",
   data() {
     return {
       // 版本号
       version: "1.0.0",
+      cityJobEchartsData: ""
     };
   },
   methods: {
     goTarget(href) {
       window.open(href, "_blank");
     },
+
+
+    /** 获取职位城市工作统计数据 */
+    getJobCityData() {
+      request({
+        url: '/echars/job/city',
+        method: 'get',
+      }).then(response => {
+        this.cityJobEchartsData = response
+        this.cityJobEcharts();
+        this.cityJobEMapCharts();
+      });
+
+    },
+
+    cityJobEcharts(){
+      var chartDom = document.getElementById('cityJob');
+      var myChart = echarts.init(chartDom);
+      var option;
+
+      option = {
+        title: {
+          text: '职位数量排名前十的城市',
+          subtext: '职位数量',
+          left: 'center'
+        },
+        tooltip: {
+          trigger: 'item'
+        },
+        legend: {
+          orient: 'vertical',
+          left: 'left'
+        },
+        series: [
+          {
+            name: '职位数量',
+            type: 'pie',
+            radius: '50%',
+            data: this.cityJobEchartsData,
+            emphasis: {
+              itemStyle: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: 'rgba(0, 0, 0, 0.5)'
+              }
+            }
+          }
+        ]
+      };
+      option && myChart.setOption(option);
+    },
+
+    cityJobEMapCharts(){
+
+    }
+
   },
+
+  mounted() {
+
+  },
+  created() {
+    this.getJobCityData();
+  }
 };
 </script>
 
