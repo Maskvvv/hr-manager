@@ -10,114 +10,23 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="职位名称" prop="subTitle">
-        <el-input
-          v-model="queryParams.subTitle"
-          placeholder="请输入职位名称"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="职位名称" prop="jobCategory">
-        <el-input
-          v-model="queryParams.jobCategory"
-          placeholder="请输入职位名称"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="职位名称" prop="cityInfo">
-        <el-input
-          v-model="queryParams.cityInfo"
-          placeholder="请输入职位名称"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="职位名称" prop="recruitType">
-        <el-select v-model="queryParams.recruitType" placeholder="请选择职位名称" clearable size="small">
-          <el-option label="请选择字典生成" value="" />
+      <el-form-item label="职位类型" prop="jobCategory">
+        <el-select v-model="queryParams.jobCategoryId" placeholder="请选择职位类型" clearable>
+          <el-option
+            v-for="item in jobCategoryList"
+            :label="item.name"
+            :value="item.id">
+          </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="职位名称" prop="publishTime">
-        <el-input
-          v-model="queryParams.publishTime"
-          placeholder="请输入职位名称"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="职位名称" prop="deliveryInfoId">
-        <el-input
-          v-model="queryParams.deliveryInfoId"
-          placeholder="请输入职位名称"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="职位名称" prop="channelOnlineStatus">
-        <el-select v-model="queryParams.channelOnlineStatus" placeholder="请选择职位名称" clearable size="small">
-          <el-option label="请选择字典生成" value="" />
+      <el-form-item label="城市" prop="cityInfo">
+        <el-select v-model="queryParams.cityInfoId" placeholder="请选择职位城市" clearable>
+          <el-option
+            v-for="item in jobCityList"
+            :label="item.name"
+            :value="item.code">
+          </el-option>
         </el-select>
-      </el-form-item>
-      <el-form-item label="职位名称" prop="jobHotFlag">
-        <el-input
-          v-model="queryParams.jobHotFlag"
-          placeholder="请输入职位名称"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="职位名称" prop="jobSubject">
-        <el-input
-          v-model="queryParams.jobSubject"
-          placeholder="请输入职位名称"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="职位名称" prop="code">
-        <el-input
-          v-model="queryParams.code"
-          placeholder="请输入职位名称"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="职位名称" prop="departmentId">
-        <el-input
-          v-model="queryParams.departmentId"
-          placeholder="请输入职位名称"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="职位名称" prop="jobId">
-        <el-input
-          v-model="queryParams.jobId"
-          placeholder="请输入职位名称"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="职位名称" prop="cityList">
-        <el-input
-          v-model="queryParams.cityList"
-          placeholder="请输入职位名称"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
@@ -230,79 +139,67 @@
     />
 
     <!-- 添加或修改招聘职位对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="职位名称" prop="title">
-          <el-input v-model="form.title" placeholder="请输入职位名称" />
-        </el-form-item>
-        <el-form-item label="职位名称" prop="subTitle">
-          <el-input v-model="form.subTitle" placeholder="请输入职位名称" />
-        </el-form-item>
-        <el-form-item label="职位名称" prop="description">
-          <el-input v-model="form.description" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="职位名称" prop="requirement">
-          <el-input v-model="form.requirement" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="职位名称" prop="jobCategory">
-          <el-input v-model="form.jobCategory" placeholder="请输入职位名称" />
-        </el-form-item>
-        <el-form-item label="职位名称" prop="cityInfo">
-          <el-input v-model="form.cityInfo" placeholder="请输入职位名称" />
-        </el-form-item>
-        <el-form-item label="职位名称" prop="recruitType">
-          <el-select v-model="form.recruitType" placeholder="请选择职位名称">
-            <el-option label="请选择字典生成" value="" />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="职位名称" prop="publishTime">
-          <el-input v-model="form.publishTime" placeholder="请输入职位名称" />
-        </el-form-item>
-        <el-form-item label="职位名称" prop="deliveryInfoId">
-          <el-input v-model="form.deliveryInfoId" placeholder="请输入职位名称" />
-        </el-form-item>
-        <el-form-item label="职位名称">
-          <el-radio-group v-model="form.channelOnlineStatus">
-            <el-radio label="1">请选择字典生成</el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item label="职位名称" prop="jobHotFlag">
-          <el-input v-model="form.jobHotFlag" placeholder="请输入职位名称" />
-        </el-form-item>
-        <el-form-item label="职位名称" prop="jobSubject">
-          <el-input v-model="form.jobSubject" placeholder="请输入职位名称" />
-        </el-form-item>
-        <el-form-item label="职位名称" prop="code">
-          <el-input v-model="form.code" placeholder="请输入职位名称" />
-        </el-form-item>
-        <el-form-item label="职位名称" prop="departmentId">
-          <el-input v-model="form.departmentId" placeholder="请输入职位名称" />
-        </el-form-item>
-        <el-form-item label="职位名称" prop="jobProcessId">
-          <el-input v-model="form.jobProcessId" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="职位名称" prop="jobId">
-          <el-input v-model="form.jobId" placeholder="请输入职位名称" />
-        </el-form-item>
-        <el-form-item label="职位名称" prop="cityList">
-          <el-input v-model="form.cityList" placeholder="请输入职位名称" />
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+    <el-drawer
+      title="招聘职位职位"
+      :visible.sync="open"
+      direction="rtl"
+      size="50%">
+      <div style="padding-left: 40px; padding-right: 40px">
+        <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+          <el-form-item label="职位名称" prop="title">
+            <el-input v-model="form.title" placeholder="请输入职位名称" />
+          </el-form-item>
+          <el-form-item label="职位描述" prop="description">
+            <el-input v-model="form.description" type="textarea" placeholder="请填写职位描述" />
+          </el-form-item>
+          <el-form-item label="职位要求" prop="requirement">
+            <el-input v-model="form.requirement" type="textarea" placeholder="请填写职位要求" />
+          </el-form-item>
+          <el-form-item label="职位类型" prop="jobCategory">
+            <el-select v-model="form.jobCategoryId" placeholder="请选择职位类型">
+              <el-option
+                v-for="item in jobCategoryList"
+                :label="item.name"
+                :value="item.id">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="城市" prop="cityInfo">
+            <el-select v-model="form.cityInfoId" placeholder="请选择职位城市">
+              <el-option
+                v-for="item in jobCityList"
+                :label="item.name"
+                :value="item.code">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="职位性质" prop="recruitType">
+            <el-select v-model="form.recruitType" placeholder="请选择职位职位性质">
+              <el-option label="正式" value='{"parent":{"parent":null,"i18n_name":"社招","depth":1,"active_status":1,"children":null,"name":"社招","en_name":"Experienced","id":"1"},"i18n_name":"正式","depth":2,"active_status":1,"children":null,"name":"正式","en_name":"Regular","id":"101"}' />
+            </el-select>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button type="primary" @click="submitForm">确 定</el-button>
+          <el-button @click="cancel">取 消</el-button>
+        </div>
       </div>
-    </el-dialog>
+    </el-drawer>
   </div>
 </template>
 
 <script>
 import { listJobPost, getJobPost, delJobPost, addJobPost, updateJobPost, exportJobPost } from "@/api/recruit/jobPost";
+import request from "@/utils/request";
 
 export default {
   name: "JobPost",
   data() {
     return {
+      // 职位类型
+      jobCategoryList: "",
+      // 职位类型
+      jobCityList: "",
       // 遮罩层
       loading: true,
       // 导出遮罩层
@@ -363,6 +260,22 @@ export default {
         this.jobPostList = response.rows;
         this.total = response.total;
         this.loading = false;
+      });
+
+      /** 查询招聘职位类型列表 */
+      request({
+        url: '/recruit/jobType/list',
+        method: 'get',
+      }).then(response => {
+        this.jobCategoryList = response.rows
+      });
+
+      /** 招聘城市列表 */
+      request({
+        url: '/recruit/city/list',
+        method: 'get',
+      }).then(response => {
+        this.jobCityList = response.rows
       });
     },
     // 取消按钮
