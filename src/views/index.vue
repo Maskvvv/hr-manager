@@ -54,6 +54,14 @@
     <el-row justify="start" type="flex" :gutter="20" style="padding-top: 20px">
       <el-col :sm="24" :lg="12">
         <el-card class="update-log">
+          <div id="dayActiveUserCharts" style="width: 600px; height:400px;"></div>
+        </el-card>
+      </el-col>
+    </el-row>
+
+    <el-row justify="start" type="flex" :gutter="20" style="padding-top: 20px">
+      <el-col :sm="24" :lg="12">
+        <el-card class="update-log">
           <div id="cityJob" style="width: 600px; height:400px;"></div>
         </el-card>
       </el-col>
@@ -64,7 +72,6 @@
         </el-card>
       </el-col>
     </el-row>
-
     <!--echars-->
 
     <el-row :gutter="20">
@@ -168,7 +175,8 @@ export default {
       // 版本号
       version: "1.0.0",
       cityJobEchartsData: "",
-      jobCategoryEchartsData: ""
+      jobCategoryEchartsData: "",
+      dayActiveUserEchartsData: "",
     };
   },
   methods: {
@@ -198,9 +206,23 @@ export default {
         this.jobCategoryEchartsData = response
         this.jobCategoryCharts();
       });
+    },
+
+    /** 获取日活统计数据 */
+    getDayActiveUserData() {
+      request({
+        url: '/echars/day/active/user',
+        method: 'get',
+      }).then(response => {
+        this.dayActiveUserEchartsData = response
+        this.dayActiveUserCharts();
+      });
 
     },
 
+
+
+    /** 生成职位城市工作统计表 */
     cityJobEcharts(){
       var chartDom = document.getElementById('cityJob');
       var myChart = echarts.init(chartDom);
@@ -238,6 +260,7 @@ export default {
       option && myChart.setOption(option);
     },
 
+    /** 生成职位类别工作统计表 */
     jobCategoryCharts(){
       var chartDom = document.getElementById('jobCategoryEcharts');
       var myChart = echarts.init(chartDom);
@@ -245,7 +268,7 @@ export default {
 
       option = {
         title: {
-          text: '职位数量排名前十的职位类别',
+          text: '职位数量排名前三十的职位类别',
           left: 'center'
         },
         tooltip: {
@@ -279,6 +302,83 @@ export default {
 
       option && myChart.setOption(option);
 
+    },
+
+    /** 生成日活统计数据 */
+    dayActiveUserCharts() {
+      var chartDom = document.getElementById('dayActiveUserCharts');
+      var myChart = echarts.init(chartDom);
+      var option;
+
+      option = {
+        color: ['#80FFA5', '#00DDFF', '#37A2FF', '#FF0087', '#FFBF00'],
+        title: {
+          text: '系统近七天日活'
+        },
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'cross',
+            label: {
+              backgroundColor: '#6a7985'
+            }
+          }
+        },
+        toolbox: {
+          feature: {
+            saveAsImage: {}
+          }
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
+        xAxis: [
+          {
+            type: 'category',
+            boundaryGap: false,
+            data: this.dayActiveUserEchartsData.xaxis
+          }
+        ],
+        yAxis: [
+          {
+            type: 'value'
+          }
+        ],
+        series: [
+          {
+            name: '日活',
+            type: 'line',
+            stack: 'Total',
+            smooth: true,
+            lineStyle: {
+              width: 0
+            },
+            showSymbol: false,
+            areaStyle: {
+              opacity: 0.8,
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                {
+                  offset: 0,
+                  color: 'rgb(128, 255, 165)'
+                },
+                {
+                  offset: 1,
+                  color: 'rgb(1, 191, 236)'
+                }
+              ])
+            },
+            emphasis: {
+              focus: 'series'
+            },
+            data: this.dayActiveUserEchartsData.yaxis
+          }
+        ]
+      };
+
+      option && myChart.setOption(option);
     }
 
   },
@@ -286,6 +386,7 @@ export default {
   mounted() {
     this.getJobCategoryData();
     this.getJobCityData();
+    this.getDayActiveUserData();
   },
   created() {
 
