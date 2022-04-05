@@ -60,7 +60,7 @@
 
       <el-col :sm="24" :lg="12">
         <el-card class="update-log">
-          <div id="cityJobMap" style="width: 600px; height:400px;"></div>
+          <div id="jobCategoryEcharts" style="width: 600px; height:400px;"></div>
         </el-card>
       </el-col>
     </el-row>
@@ -167,7 +167,8 @@ export default {
     return {
       // 版本号
       version: "1.0.0",
-      cityJobEchartsData: ""
+      cityJobEchartsData: "",
+      jobCategoryEchartsData: ""
     };
   },
   methods: {
@@ -184,7 +185,18 @@ export default {
       }).then(response => {
         this.cityJobEchartsData = response
         this.cityJobEcharts();
-        this.cityJobEMapCharts();
+      });
+
+    },
+
+    /** 获取职位类别工作统计数据 */
+    getJobCategoryData() {
+      request({
+        url: '/echars/job/category',
+        method: 'get',
+      }).then(response => {
+        this.jobCategoryEchartsData = response
+        this.jobCategoryCharts();
       });
 
     },
@@ -226,17 +238,58 @@ export default {
       option && myChart.setOption(option);
     },
 
-    cityJobEMapCharts(){
+    jobCategoryCharts(){
+      var chartDom = document.getElementById('jobCategoryEcharts');
+      var myChart = echarts.init(chartDom);
+      var option;
+
+      option = {
+        title: {
+          text: '职位数量排名前十的职位类别',
+          left: 'center'
+        },
+        tooltip: {
+          trigger: 'item',
+          formatter: '{a} <br/>{b} : {c} ({d}%)'
+        },
+        legend: {
+          type: 'scroll',
+          orient: 'vertical',
+          right: 10,
+          top: 20,
+          bottom: 20
+        },
+        series: [
+          {
+            name: '姓名',
+            type: 'pie',
+            radius: '55%',
+            center: ['40%', '50%'],
+            data: this.jobCategoryEchartsData,
+            emphasis: {
+              itemStyle: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: 'rgba(0, 0, 0, 0.5)'
+              }
+            }
+          }
+        ]
+      };
+
+      option && myChart.setOption(option);
 
     }
 
   },
 
   mounted() {
-
+    this.getJobCategoryData();
+    this.getJobCityData();
   },
   created() {
-    this.getJobCityData();
+
+
   }
 };
 </script>
