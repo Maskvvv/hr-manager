@@ -3,13 +3,15 @@
 
     <el-row justify="start" type="flex" :gutter="20">
       <!--左大列-->
-      <el-col :xs="24" :lg="16">
+      <el-col span="16">
         <el-row align="top" :gutter="20">
+
+          <!--数据统计-->
           <el-col>
             <el-col :xs="24" :lg="6">
               <el-card class="update-log">
                 <div slot="header" class="clearfix">
-                  <i class="el-icon-s-data" style="color: #67C23A"></i><span>在线人数</span>
+                  <i class="el-icon-s-data" style="color: #67C23A"></i><span> 在线人数</span>
                 </div>
                 <div class="body" style="text-align: center">
                   <h2>2</h2>
@@ -21,7 +23,7 @@
             <el-col :xs="24" :lg="6">
               <el-card class="update-log">
                 <div slot="header" class="clearfix">
-                  <i class="el-icon-user-solid" style="color: #E6A23C"></i><span>系统用户数</span>
+                  <i class="el-icon-user-solid" style="color: #E6A23C"></i><span> 系统用户数</span>
                 </div>
                 <div class="body" style="text-align: center">
                   <h2>3</h2>
@@ -32,7 +34,7 @@
             <el-col :xs="24" :lg="6">
               <el-card class="update-log">
                 <div slot="header" class="clearfix">
-                  <i class="el-icon-user-solid" style="color: #F56C6C"></i><span>部门数</span>
+                  <i class="el-icon-user-solid" style="color: #F56C6C"></i><span> 部门数</span>
                 </div>
                 <div class="body" style="text-align: center">
                   <h2>34</h2>
@@ -44,7 +46,7 @@
             <el-col :xs="24" :lg="6">
               <el-card class="update-log">
                 <div slot="header" class="clearfix">
-                  <i class="el-icon-user-solid" style="color: #F56C6C"></i><span>职位数量</span>
+                  <i class="el-icon-user-solid" style="color: #F56C6C"></i><span> 职位数量</span>
                 </div>
                 <div class="body" style="text-align: center">
                   <h2>34</h2>
@@ -53,7 +55,9 @@
 
             </el-col>
           </el-col>
+          <!--数据统计-->
 
+          <!--echars-->
           <!--echars-->
           <el-col el-col :xs="24" :lg="24" style="padding-top: 20px">
             <el-card class="update-log">
@@ -80,14 +84,14 @@
       <!--左大列-->
 
       <!--右大列-->
-      <el-col :xs="24" :lg="8">
+      <el-col span="8">
 
         <el-row align="top" :gutter="20">
 
-          <el-col :xs="24" :sm="24" :md="24" :lg="24">
+          <el-col>
             <el-card class="update-log">
               <div slot="header" class="clearfix">
-                <span>程序编写日志</span>
+                <i class="el-icon-tickets" style="color: #c23a3a"></i><span> 程序编写日志</span>
               </div>
               <el-collapse accordion>
                 <el-collapse-item title="v1.0.0 - 2021-06-13">
@@ -114,10 +118,10 @@
             </el-card>
           </el-col>
 
-          <el-col span="24" style="padding-top: 20px">
+          <el-col style="padding-top: 20px">
             <el-card class="update-log">
               <div slot="header" class="clearfix">
-                <span>联系信息</span>
+                <i class="el-icon-phone" style="color: #3ac2b7"></i><span> 联系信息</span>
               </div>
               <div class="body">
                 <p>
@@ -143,7 +147,7 @@
             </el-card>
           </el-col>
 
-          <el-col :sm="24" :lg="24" style="padding-top: 20px">
+          <el-col style="padding-top: 20px">
             <el-card class="update-log">
               <div slot="header" class="clearfix">
                 <span>人力资源管理系统</span>
@@ -157,7 +161,7 @@
             </el-card>
           </el-col>
 
-          <el-col :sm="24" :lg="24" style="padding-top: 20px" >
+          <el-col style="padding-top: 20px" >
             <el-card class="update-log">
               <div slot="header" class="clearfix">
                 <span>运用到的技术栈</span>
