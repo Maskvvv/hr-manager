@@ -116,9 +116,23 @@
               <el-input-number v-model="form.orderNum" controls-position="right" :min="0" />
             </el-form-item>
           </el-col>
+<!--          <el-col :span="12">-->
+<!--            <el-form-item label="负责人" prop="leader">-->
+<!--              <el-input v-model="form.leader" placeholder="请输入负责人" maxlength="20" />-->
+<!--            </el-form-item>-->
+<!--          </el-col>-->
           <el-col :span="12">
-            <el-form-item label="负责人" prop="leader">
-              <el-input v-model="form.leader" placeholder="请输入负责人" maxlength="20" />
+            <el-form-item label="负责人" prop="leader" required>
+              <el-select v-model="form.userId" placeholder="请选择" @change="leaderChange">
+                <el-option
+                  v-for="item in this.deptUsers"
+                  :key="item.userId"
+                  :label="item.nickName"
+                  :value="item.userId">
+                  <span style="float: left">{{ item.nickName }}</span>
+                  <span style="float: right; color: #8492a6; font-size: 13px">{{ item.userName }}</span>
+                </el-option>
+              </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -156,6 +170,7 @@
 import { listDept, getDept, delDept, addDept, updateDept, listDeptExcludeChild } from "@/api/system/dept";
 import Treeselect from "@riophae/vue-treeselect";
 import "@riophae/vue-treeselect/dist/vue-treeselect.css";
+import request from "@/utils/request";
 
 export default {
   name: "Dept",
@@ -163,6 +178,8 @@ export default {
   components: { Treeselect },
   data() {
     return {
+      // 部门用户
+      deptUsers: [],
       // 遮罩层
       loading: true,
       // 显示搜索条件
@@ -220,6 +237,10 @@ export default {
     this.getList();
   },
   methods: {
+    // 取消按钮
+    leaderChange(leader) {
+      console.log(leader)
+    },
     /** 查询部门列表 */
     getList() {
       this.loading = true;
@@ -290,6 +311,13 @@ export default {
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
+      // 获取用户列表
+      request({
+        url: '/system/user/dept/users',
+        method: 'get'
+      }).then(response => {
+        this.deptUsers = response
+      });
       getDept(row.deptId).then(response => {
         this.form = response.data;
         this.open = true;

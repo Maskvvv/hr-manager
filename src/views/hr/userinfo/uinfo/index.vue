@@ -204,195 +204,203 @@
     />
 
     <!-- 添加或修改用户详细信息对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="员工姓名" prop="userInfoName">
-          <el-input v-model="form.userInfoName" placeholder="请输入员工姓名" />
-        </el-form-item>
-        <el-form-item label="出生日期" prop="birthday">
-          <el-date-picker clearable size="small"
-            v-model="form.birthday"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="选择出生日期">
-          </el-date-picker>
-        </el-form-item>
+    <el-drawer
+      title="员工信息"
+      :visible.sync="open"
+      direction="rtl"
+      size="50%">
+      <div style="padding-left: 40px; padding-right: 40px">
+        <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+          <el-form-item label="员工姓名" prop="userInfoName">
+            <el-input v-model="form.userInfoName" placeholder="请输入员工姓名" />
+          </el-form-item>
+          <el-form-item label="出生日期" prop="birthday">
+            <el-date-picker clearable size="small"
+                            v-model="form.birthday"
+                            type="date"
+                            value-format="yyyy-MM-dd"
+                            placeholder="选择出生日期">
+            </el-date-picker>
+          </el-form-item>
 
-        <el-form-item label="用户性别">
-          <el-select v-model="form.sex" placeholder="请选择">
-            <el-option
-              v-for="dict in dict.type.sys_user_sex"
-              :key="dict.value"
-              :label="dict.label"
-              :value="dict.value"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="手机号码" prop="phonenumber">
-          <el-input v-model="form.phonenumber" maxlength="11" />
-        </el-form-item>
-        <el-form-item label="邮箱" prop="email">
-          <el-input v-model="form.email" maxlength="50" />
-        </el-form-item>
-        <el-form-item label="身份证号">
-          <el-input v-model="form.idCard" :maxlength="18" placeholder="请输入身份证号" value="371322111111110016" />
-        </el-form-item>
-        <el-form-item label="婚姻状况">
-          <el-radio-group v-model="form.maritalStatus">
-            <el-radio
-              v-for="dict in dict.type.marital_status"
-              :key="dict.value"
-              :label="dict.value"
-            >{{dict.label}}</el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item label="民族" prop="nationId">
-          <el-select v-model="form.nationId" placeholder="请输入民族">
-            <el-option
-              v-for="item in nationList"
-              :label="item.nationName"
-              :value="item.nationId">
-            </el-option>
-          </el-select>
-        </el-form-item>
+          <el-form-item label="用户性别">
+            <el-select v-model="form.sex" placeholder="请选择">
+              <el-option
+                v-for="dict in dict.type.sys_user_sex"
+                :key="dict.value"
+                :label="dict.label"
+                :value="dict.value"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="手机号码" prop="phonenumber">
+            <el-input v-model="form.phonenumber" maxlength="11" />
+          </el-form-item>
+          <el-form-item label="邮箱" prop="email">
+            <el-input v-model="form.email" maxlength="50" />
+          </el-form-item>
+          <el-form-item label="身份证号">
+            <el-input v-model="form.idCard" :maxlength="18" placeholder="请输入身份证号" value="371322111111110016" />
+          </el-form-item>
+          <el-form-item label="婚姻状况">
+            <el-radio-group v-model="form.maritalStatus">
+              <el-radio
+                v-for="dict in dict.type.marital_status"
+                :key="dict.value"
+                :label="dict.value"
+              >{{dict.label}}</el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item label="民族" prop="nationId">
+            <el-select v-model="form.nationId" placeholder="请输入民族">
+              <el-option
+                v-for="item in nationList"
+                :label="item.nationName"
+                :value="item.nationId">
+              </el-option>
+            </el-select>
+          </el-form-item>
 
-        <el-form-item label="套账" prop="salaryId">
-          <el-select v-model="form.salaryId" placeholder="请输入套账">
-            <el-option
-              v-for="item in salaryList"
-              :label="item.salaryName"
-              :value="item.salaryId">
-            </el-option>
-          </el-select>
-        </el-form-item>
+          <el-form-item label="套账" prop="salaryId">
+            <el-select v-model="form.salaryId" placeholder="请输入套账">
+              <el-option
+                v-for="item in salaryList"
+                :label="item.salaryName"
+                :value="item.salaryId">
+              </el-option>
+            </el-select>
+          </el-form-item>
 
-        <el-form-item label="所属部门" prop="deptId">
-          <el-select v-model="form.deptId" placeholder="请选择所属部门">
-            <el-option
-              v-for="item in deptList"
-              :label="item.deptName"
-              :value="item.deptId">
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="籍贯" prop="nativePlace">
-          <el-input v-model="form.nativePlace" placeholder="请输入籍贯" value="山东青岛" />
-<!--          <el-select v-model="form.nativePlace" placeholder="请选择籍贯">-->
-<!--            <el-option label="请选择字典生成" value="" />-->
-<!--          </el-select>-->
-        </el-form-item>
-        <el-form-item label="政治面貌" prop="politicsId">
-          <el-select v-model="form.politicsId" placeholder="请输入政治面貌">
-            <el-option
-              v-for="item in politicsList"
-              :label="item.politicsName"
-              :value="item.politicsId">
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="联系地址" prop="address">
-          <el-input v-model="form.address" placeholder="请输入联系地址" />
-        </el-form-item>
-        <el-form-item label="职称" prop="jobLevelId">
-          <el-select v-model="form.jobLevelId" placeholder="请选择职称">
-            <el-option
-              v-for="item in jobLevelList"
-              :label="item.name"
-              :value="item.id">
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="聘用形式" prop="engageForm">
-          <el-select v-model="form.engageForm" placeholder="请选择聘用形式">
-            <el-option
-              v-for="dict in dict.type.engage_form"
-              :key="dict.value"
-              :label="dict.label"
-              :value="dict.value"
-            />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="最高学历" prop="tiptopDegree">
-          <el-select v-model="form.tiptopDegree" placeholder="请选择最高学历">
-            <el-option label="初中" value="初中" />
-            <el-option label="高中" value="高中" />
-            <el-option label="本科" value="本科" />
-            <el-option label="硕士" value="硕士" />
-            <el-option label="博士" value="博士" />
-            <el-option label="博士后" value="博士后" />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="所属专业" prop="specialty">
-<!--          <el-select v-model="form.specialty" placeholder="请选择所属专业">-->
-<!--            <el-option label="请选择字典生成" value="" />-->
-<!--          </el-select>-->
-          <el-input v-model="form.specialty" placeholder="请输入所属专业" />
-        </el-form-item>
-        <el-form-item label="毕业院校" prop="school">
-<!--          <el-select v-model="form.school" placeholder="请选择毕业院校">-->
-<!--            <el-option label="请选择字典生成" value="" />-->
-<!--          </el-select>-->
-          <el-input v-model="form.school" placeholder="请输入毕业院校" value="山东大学"/>
-        </el-form-item>
-        <el-form-item label="入职日期" prop="beginDate">
-          <el-date-picker clearable size="small"
-            v-model="form.beginDate"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="选择入职日期">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="在职状态" prop="workState">
-          <el-select v-model="form.workState" placeholder="请选择在职状态">
-            <el-option
-              v-for="dict in dict.type.work_state"
-              :key="dict.value"
-              :label="dict.label"
-              :value="dict.value"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="转正日期" prop="conversionTime">
-          <el-date-picker clearable size="small"
-            v-model="form.conversionTime"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="选择转正日期">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="离职日期" prop="notWorkDate">
-          <el-date-picker clearable size="small"
-            v-model="form.notWorkDate"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="选择离职日期">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="合同起始日期" prop="beginContract">
-          <el-date-picker clearable size="small"
-            v-model="form.beginContract"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="选择合同起始日期">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="合同终止日期" prop="endContract">
-          <el-date-picker clearable size="small"
-            v-model="form.endContract"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="选择合同终止日期">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="工龄" prop="workAge">
-          <el-input v-model="form.workAge" placeholder="请输入工龄" />
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+          <el-form-item label="所属部门" prop="deptId">
+            <el-select v-model="form.deptId" placeholder="请选择所属部门">
+              <el-option
+                v-for="item in deptList"
+                :label="item.deptName"
+                :value="item.deptId">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="籍贯" prop="nativePlace">
+            <el-input v-model="form.nativePlace" placeholder="请输入籍贯" value="山东青岛" />
+            <!--          <el-select v-model="form.nativePlace" placeholder="请选择籍贯">-->
+            <!--            <el-option label="请选择字典生成" value="" />-->
+            <!--          </el-select>-->
+          </el-form-item>
+          <el-form-item label="政治面貌" prop="politicsId">
+            <el-select v-model="form.politicsId" placeholder="请输入政治面貌">
+              <el-option
+                v-for="item in politicsList"
+                :label="item.politicsName"
+                :value="item.politicsId">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="联系地址" prop="address">
+            <el-input v-model="form.address" placeholder="请输入联系地址" />
+          </el-form-item>
+          <el-form-item label="职称" prop="jobLevelId">
+            <el-select v-model="form.jobLevelId" placeholder="请选择职称">
+              <el-option
+                v-for="item in jobLevelList"
+                :label="item.name"
+                :value="item.id">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="聘用形式" prop="engageForm">
+            <el-select v-model="form.engageForm" placeholder="请选择聘用形式">
+              <el-option
+                v-for="dict in dict.type.engage_form"
+                :key="dict.value"
+                :label="dict.label"
+                :value="dict.value"
+              />
+            </el-select>
+          </el-form-item>
+          <el-form-item label="最高学历" prop="tiptopDegree">
+            <el-select v-model="form.tiptopDegree" placeholder="请选择最高学历">
+              <el-option label="初中" value="初中" />
+              <el-option label="高中" value="高中" />
+              <el-option label="本科" value="本科" />
+              <el-option label="硕士" value="硕士" />
+              <el-option label="博士" value="博士" />
+              <el-option label="博士后" value="博士后" />
+            </el-select>
+          </el-form-item>
+          <el-form-item label="所属专业" prop="specialty">
+            <!--          <el-select v-model="form.specialty" placeholder="请选择所属专业">-->
+            <!--            <el-option label="请选择字典生成" value="" />-->
+            <!--          </el-select>-->
+            <el-input v-model="form.specialty" placeholder="请输入所属专业" />
+          </el-form-item>
+          <el-form-item label="毕业院校" prop="school">
+            <!--          <el-select v-model="form.school" placeholder="请选择毕业院校">-->
+            <!--            <el-option label="请选择字典生成" value="" />-->
+            <!--          </el-select>-->
+            <el-input v-model="form.school" placeholder="请输入毕业院校" value="山东大学"/>
+          </el-form-item>
+          <el-form-item label="入职日期" prop="beginDate">
+            <el-date-picker clearable size="small"
+                            v-model="form.beginDate"
+                            type="date"
+                            value-format="yyyy-MM-dd"
+                            placeholder="选择入职日期">
+            </el-date-picker>
+          </el-form-item>
+          <el-form-item label="在职状态" prop="workState">
+            <el-select v-model="form.workState" placeholder="请选择在职状态">
+              <el-option
+                v-for="dict in dict.type.work_state"
+                :key="dict.value"
+                :label="dict.label"
+                :value="dict.value"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="转正日期" prop="conversionTime">
+            <el-date-picker clearable size="small"
+                            v-model="form.conversionTime"
+                            type="date"
+                            value-format="yyyy-MM-dd"
+                            placeholder="选择转正日期">
+            </el-date-picker>
+          </el-form-item>
+          <el-form-item label="离职日期" prop="notWorkDate">
+            <el-date-picker clearable size="small"
+                            v-model="form.notWorkDate"
+                            type="date"
+                            value-format="yyyy-MM-dd"
+                            placeholder="选择离职日期">
+            </el-date-picker>
+          </el-form-item>
+          <el-form-item label="合同起始日期" prop="beginContract">
+            <el-date-picker clearable size="small"
+                            v-model="form.beginContract"
+                            type="date"
+                            value-format="yyyy-MM-dd"
+                            placeholder="选择合同起始日期">
+            </el-date-picker>
+          </el-form-item>
+          <el-form-item label="合同终止日期" prop="endContract">
+            <el-date-picker clearable size="small"
+                            v-model="form.endContract"
+                            type="date"
+                            value-format="yyyy-MM-dd"
+                            placeholder="选择合同终止日期">
+            </el-date-picker>
+          </el-form-item>
+          <el-form-item label="工龄" prop="workAge">
+            <el-input v-model="form.workAge" placeholder="请输入工龄" />
+          </el-form-item>
+        </el-form>
+
+
+        <div slot="footer" class="dialog-footer">
+          <el-button type="primary" @click="submitForm">确 定</el-button>
+          <el-button @click="cancel">取 消</el-button>
+        </div>
       </div>
-    </el-dialog>
+    </el-drawer>
   </div>
 </template>
 

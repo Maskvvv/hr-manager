@@ -11,10 +11,10 @@
             <el-col :xs="24" :lg="6">
               <el-card class="update-log">
                 <div slot="header" class="clearfix">
-                  <i class="el-icon-s-data" style="color: #67C23A"></i><span> 在线人数</span>
+                  <i class="el-icon-s-data" style="color: #67C23A"></i><span> 今日日活</span>
                 </div>
                 <div class="body" style="text-align: center">
-                  <h2>2</h2>
+                  <h2>49</h2>
                 </div>
               </el-card>
 
@@ -26,7 +26,7 @@
                   <i class="el-icon-user-solid" style="color: #E6A23C"></i><span> 系统用户数</span>
                 </div>
                 <div class="body" style="text-align: center">
-                  <h2>3</h2>
+                  <h2>11</h2>
                 </div>
               </el-card>
             </el-col>
@@ -49,7 +49,7 @@
                   <i class="el-icon-user-solid" style="color: #F56C6C"></i><span> 职位数量</span>
                 </div>
                 <div class="body" style="text-align: center">
-                  <h2>34</h2>
+                  <h2>1550</h2>
                 </div>
               </el-card>
 
@@ -324,7 +324,7 @@ export default {
         },
         series: [
           {
-            name: '姓名',
+            name: '职位数量',
             type: 'pie',
             radius: '55%',
             center: ['40%', '50%'],
