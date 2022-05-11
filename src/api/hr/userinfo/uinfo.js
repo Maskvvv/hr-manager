@@ -36,9 +36,16 @@ export function updateUinfo(data) {
 }
 
 // 删除用户详细信息
+// export function delUinfo(userInfoId) {
+//   return request({
+//     url: '/userinfo/uinfo/' + userInfoId,
+//     method: 'delete'
+//   })
+// }
+
 export function delUinfo(userInfoId) {
   return request({
-    url: '/userinfo/uinfo/' + userInfoId,
+    url: '/system/user/' + userInfoId,
     method: 'delete'
   })
 }

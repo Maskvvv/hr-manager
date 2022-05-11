@@ -211,10 +211,10 @@
       size="50%">
       <div style="padding-left: 40px; padding-right: 40px">
         <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-          <el-form-item label="员工姓名" prop="userInfoName">
+          <el-form-item label="员工姓名" prop="userInfoName" required>
             <el-input v-model="form.userInfoName" placeholder="请输入员工姓名" />
           </el-form-item>
-          <el-form-item label="出生日期" prop="birthday">
+          <el-form-item label="出生日期" prop="birthday" required>
             <el-date-picker clearable size="small"
                             v-model="form.birthday"
                             type="date"
@@ -222,9 +222,8 @@
                             placeholder="选择出生日期">
             </el-date-picker>
           </el-form-item>
-
-          <el-form-item label="用户性别">
-            <el-select v-model="form.sex" placeholder="请选择">
+          <el-form-item label="用户性别" required>
+            <el-select v-model="form.sysUser.sex" placeholder="请选择">
               <el-option
                 v-for="dict in dict.type.sys_user_sex"
                 :key="dict.value"
@@ -234,13 +233,13 @@
             </el-select>
           </el-form-item>
           <el-form-item label="手机号码" prop="phonenumber">
-            <el-input v-model="form.phonenumber" maxlength="11" />
+            <el-input v-model="form.sysUser.phonenumber" maxlength="11" />
           </el-form-item>
           <el-form-item label="邮箱" prop="email">
-            <el-input v-model="form.email" maxlength="50" />
+            <el-input v-model="form.sysUser.email" maxlength="50" />
           </el-form-item>
-          <el-form-item label="身份证号">
-            <el-input v-model="form.idCard" :maxlength="18" placeholder="请输入身份证号" value="371322111111110016" />
+          <el-form-item label="身份证号" required>
+            <el-input v-model="form.idCard" :maxlength="18" placeholder="请输入身份证号" value=""/>
           </el-form-item>
           <el-form-item label="婚姻状况">
             <el-radio-group v-model="form.maritalStatus">
@@ -251,7 +250,7 @@
               >{{dict.label}}</el-radio>
             </el-radio-group>
           </el-form-item>
-          <el-form-item label="民族" prop="nationId">
+          <el-form-item label="民族" prop="nationId" required>
             <el-select v-model="form.nationId" placeholder="请输入民族">
               <el-option
                 v-for="item in nationList"
@@ -261,7 +260,7 @@
             </el-select>
           </el-form-item>
 
-          <el-form-item label="套账" prop="salaryId">
+          <el-form-item label="套账" prop="salaryId" required>
             <el-select v-model="form.salaryId" placeholder="请输入套账">
               <el-option
                 v-for="item in salaryList"
@@ -272,7 +271,7 @@
           </el-form-item>
 
           <el-form-item label="所属部门" prop="deptId">
-            <el-select v-model="form.deptId" placeholder="请选择所属部门">
+            <el-select v-model="form.sysUser.deptId" placeholder="请选择所属部门">
               <el-option
                 v-for="item in deptList"
                 :label="item.deptName"
@@ -286,7 +285,7 @@
             <!--            <el-option label="请选择字典生成" value="" />-->
             <!--          </el-select>-->
           </el-form-item>
-          <el-form-item label="政治面貌" prop="politicsId">
+          <el-form-item label="政治面貌" prop="politicsId" required>
             <el-select v-model="form.politicsId" placeholder="请输入政治面貌">
               <el-option
                 v-for="item in politicsList"
@@ -298,7 +297,7 @@
           <el-form-item label="联系地址" prop="address">
             <el-input v-model="form.address" placeholder="请输入联系地址" />
           </el-form-item>
-          <el-form-item label="职称" prop="jobLevelId">
+          <el-form-item label="职称" prop="jobLevelId" required>
             <el-select v-model="form.jobLevelId" placeholder="请选择职称">
               <el-option
                 v-for="item in jobLevelList"
@@ -307,7 +306,7 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="聘用形式" prop="engageForm">
+          <el-form-item label="聘用形式" prop="engageForm" required>
             <el-select v-model="form.engageForm" placeholder="请选择聘用形式">
               <el-option
                 v-for="dict in dict.type.engage_form"
@@ -317,7 +316,7 @@
               />
             </el-select>
           </el-form-item>
-          <el-form-item label="最高学历" prop="tiptopDegree">
+          <el-form-item label="最高学历" prop="tiptopDegree" required>
             <el-select v-model="form.tiptopDegree" placeholder="请选择最高学历">
               <el-option label="初中" value="初中" />
               <el-option label="高中" value="高中" />
@@ -339,7 +338,7 @@
             <!--          </el-select>-->
             <el-input v-model="form.school" placeholder="请输入毕业院校" value="山东大学"/>
           </el-form-item>
-          <el-form-item label="入职日期" prop="beginDate">
+          <el-form-item label="入职日期" prop="beginDate" required>
             <el-date-picker clearable size="small"
                             v-model="form.beginDate"
                             type="date"
@@ -365,14 +364,14 @@
                             placeholder="选择转正日期">
             </el-date-picker>
           </el-form-item>
-          <el-form-item label="离职日期" prop="notWorkDate">
-            <el-date-picker clearable size="small"
-                            v-model="form.notWorkDate"
-                            type="date"
-                            value-format="yyyy-MM-dd"
-                            placeholder="选择离职日期">
-            </el-date-picker>
-          </el-form-item>
+<!--          <el-form-item label="离职日期" prop="notWorkDate">-->
+<!--            <el-date-picker clearable size="small"-->
+<!--                            v-model="form.notWorkDate"-->
+<!--                            type="date"-->
+<!--                            value-format="yyyy-MM-dd"-->
+<!--                            placeholder="选择离职日期">-->
+<!--            </el-date-picker>-->
+<!--          </el-form-item>-->
           <el-form-item label="合同起始日期" prop="beginContract">
             <el-date-picker clearable size="small"
                             v-model="form.beginContract"
@@ -389,9 +388,9 @@
                             placeholder="选择合同终止日期">
             </el-date-picker>
           </el-form-item>
-          <el-form-item label="工龄" prop="workAge">
-            <el-input v-model="form.workAge" placeholder="请输入工龄" />
-          </el-form-item>
+<!--          <el-form-item label="工龄" prop="workAge">-->
+<!--            <el-input v-model="form.workAge" placeholder="请输入工龄" />-->
+<!--          </el-form-item>-->
         </el-form>
 
 
@@ -473,7 +472,14 @@ export default {
         workAge: null
       },
       // 表单参数
-      form: {},
+      form: {
+        sysUser: {
+          deptId: '',
+          sex: '',
+          phonenumber: '',
+          email: ''
+        }
+      },
       // 表单校验
       rules: {
       }
@@ -482,13 +488,10 @@ export default {
   created() {
     this.getList();
 
-
-
     request({
       url: '/userinfo/nation/listAll',
       method: 'get',
     }).then(response => {
-      console.log(response)
       this.nationList = response
     });
 
@@ -584,7 +587,7 @@ export default {
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.userInfoId)
+      this.ids = selection.map(item => item.userId)
       this.single = selection.length!==1
       this.multiple = !selection.length
     },
@@ -608,11 +611,11 @@ export default {
     submitForm() {
       this.$refs["form"].validate(valid => {
         if (valid) {
-          this.form.sysUser =
-            {deptId: this.form.deptId,
-              sex: this.form.sex,
-              phonenumber: this.form.phonenumber,
-              email: this.form.email}
+          // this.form.sysUser =
+          //   {deptId: this.form.deptId,
+          //     sex: this.form.sex,
+          //     phonenumber: this.form.phonenumber,
+          //     email: this.form.email}
           if (this.form.userInfoId != null) {
             updateUinfo(this.form).then(response => {
               this.$modal.msgSuccess("修改成功");
@@ -630,8 +633,18 @@ export default {
       });
     },
     /** 删除按钮操作 */
+    // handleDelete(row) {
+    //   const userInfoIds = row.userInfoId || this.ids;
+    //   this.$modal.confirm('是否确认删除用户详细信息编号为"' + userInfoIds + '"的数据项？').then(function() {
+    //     return delUinfo(userInfoIds);
+    //   }).then(() => {
+    //     this.getList();
+    //     this.$modal.msgSuccess("删除成功");
+    //   }).catch(() => {});
+    // },
+    /** 删除按钮操作 */
     handleDelete(row) {
-      const userInfoIds = row.userInfoId || this.ids;
+      const userInfoIds = row.userId || this.ids;
       this.$modal.confirm('是否确认删除用户详细信息编号为"' + userInfoIds + '"的数据项？').then(function() {
         return delUinfo(userInfoIds);
       }).then(() => {
@@ -639,6 +652,7 @@ export default {
         this.$modal.msgSuccess("删除成功");
       }).catch(() => {});
     },
+
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
