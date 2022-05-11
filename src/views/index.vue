@@ -14,7 +14,7 @@
                   <i class="el-icon-s-data" style="color: #67C23A"></i><span> 今日日活</span>
                 </div>
                 <div class="body" style="text-align: center">
-                  <h2>49</h2>
+                  <h2>{{ this.threeData[0] }}</h2>
                 </div>
               </el-card>
 
@@ -26,7 +26,7 @@
                   <i class="el-icon-user-solid" style="color: #E6A23C"></i><span> 系统用户数</span>
                 </div>
                 <div class="body" style="text-align: center">
-                  <h2>11</h2>
+                  <h2>{{ this.threeData[1] }}</h2>
                 </div>
               </el-card>
             </el-col>
@@ -37,7 +37,7 @@
                   <i class="el-icon-user-solid" style="color: #F56C6C"></i><span> 部门数</span>
                 </div>
                 <div class="body" style="text-align: center">
-                  <h2>34</h2>
+                  <h2>{{ this.threeData[2] }}</h2>
                 </div>
               </el-card>
 
@@ -49,7 +49,7 @@
                   <i class="el-icon-user-solid" style="color: #F56C6C"></i><span> 职位数量</span>
                 </div>
                 <div class="body" style="text-align: center">
-                  <h2>1550</h2>
+                  <h2>{{ this.threeData[3] }}</h2>
                 </div>
               </el-card>
 
@@ -217,6 +217,7 @@ export default {
       cityJobEchartsData: "",
       jobCategoryEchartsData: "",
       dayActiveUserEchartsData: "",
+      threeData: "",
     };
   },
   methods: {
@@ -256,6 +257,16 @@ export default {
       }).then(response => {
         this.dayActiveUserEchartsData = response
         this.dayActiveUserCharts();
+      });
+
+    },
+    /** 获取日活统计数据 */
+    getThreeData() {
+      request({
+        url: '/echars/three/data',
+        method: 'get',
+      }).then(response => {
+        this.threeData = response
       });
 
     },
@@ -429,8 +440,7 @@ export default {
     this.getDayActiveUserData();
   },
   created() {
-
-
+    this.getThreeData();
   }
 };
 </script>
