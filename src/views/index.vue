@@ -3,7 +3,7 @@
 
     <el-row justify="start" type="flex" :gutter="20">
       <!--左大列-->
-      <el-col span="16">
+      <el-col span="16" v-hasRole="['hasRole']">
         <el-row align="top" :gutter="20">
 
           <!--数据统计-->

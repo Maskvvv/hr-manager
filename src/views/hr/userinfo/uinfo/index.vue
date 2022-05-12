@@ -571,7 +571,13 @@ export default {
         notWorkDate: null,
         beginContract: null,
         endContract: null,
-        workAge: null
+        workAge: null,
+        sysUser: {
+          deptId: '',
+          sex: '',
+          phonenumber: '',
+          email: ''
+        }
       };
       this.resetForm("form");
     },

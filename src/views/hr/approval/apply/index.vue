@@ -114,7 +114,11 @@
           <dict-tag :options="dict.type.hr_approval_state" :value="scope.row.aprrovalState"/>
         </template>
       </el-table-column>
-      <el-table-column label="失败理由" align="center" prop="reasonFailure" />
+      <el-table-column label="失败理由" align="center" prop="reasonFailure">
+        <template slot-scope="scope">
+          {{ scope.reasonFailure === null ? "无" : scope.reasonFailure}}
+        </template>
+      </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
